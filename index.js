@@ -73,8 +73,8 @@ window.addEventListener('load', function(){
     update(){
       this.draw();
       this.pos.x += this.speed.x;
-      // if (this.pos.x < 0) this.x = 0;
-      // else if (this.x)
+      if (this.pos.x < 0) this.pos.x = 0;
+      else if (this.pos.x + this.width >= canvas.width) this.pos.x = canvas.width - this.width;
 
       this.pos.y += this.speed.y
       if (this.pos.y + this.height + this.speed.y < canvas.height){
@@ -82,6 +82,11 @@ window.addEventListener('load', function(){
       } else {
         this.speed.y = 0;
       }
+    }
+
+    // check if bunny is on the terrain
+    onTerrain(){
+      return this.pos.y >= canvas.height - this.height;
     }
   }
 

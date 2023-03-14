@@ -77,9 +77,9 @@ window.addEventListener('load', function(){
         x: 0,
         y: 0
       }
-      this.width = 40
-      this.height = 40
       this.image = document.getElementById('bunny')
+      this.width = this.image.width / 6
+      this.height = this.image.height
       this.frameX = 0
       this.frameY = 0 
     }
@@ -87,16 +87,16 @@ window.addEventListener('load', function(){
     draw(){
       ctx.strokeStyle = 'black';
       ctx.strokeRect(this.pos.x, this.pos.y, this.width, this.height);
-      ctx.fillStyle = 'red';
-      ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+      ctx.beginPath();
+      ctx.arc(this.pos.x + this.width/2, this.pos.y + this.height/2, this.width/2 - 10, 0, Math.PI * 2);
+      ctx.stroke();
+      // ctx.fillStyle = 'red';
+      // ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
       ctx.drawImage(this.image, 
                     this.frameX * this.width, this.frameY * this.height,
                     this.width, this.height,
                     this.pos.x, this.pos.y, this.width, this.height);
-      // ctx.drawImage(this.image, this.pos.x, this.pos.y, 
-      //              this.width, this.height);
-
-                    
+                     
 
     }
 
@@ -126,9 +126,7 @@ window.addEventListener('load', function(){
 
   class Enemy {
     constructor({x, y}){
-      this.width = 40
-      this.height = 40
-      
+            
       this.speed = {
         x: 0.5,
         y: 0
@@ -138,13 +136,25 @@ window.addEventListener('load', function(){
         x: x,
         y: y//terrainY - this.height// - this.speed.y -1
       }
+      this.image = document.getElementById('ghost')
+      this.width = this.image.width / 6
+      this.height = this.image.height
+      this.frameX = 0
+      this.frameY = 0 
 
     }
     draw(){
       ctx.strokeStyle = 'black';
       ctx.strokeRect(this.pos.x, this.pos.y, this.width, this.height);
-      ctx.fillStyle = 'grey';
-      ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+      ctx.beginPath();
+      ctx.arc(this.pos.x + this.width/2, this.pos.y + this.height/2, this.width/2, 0, Math.PI * 2);
+      ctx.stroke();
+      // ctx.fillStyle = 'grey';
+      // ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+      ctx.drawImage(this.image, 
+        this.frameX * this.width, this.frameY * this.height,
+        this.width, this.height,
+        this.pos.x, this.pos.y, this.width, this.height);
 
     }
     update(){

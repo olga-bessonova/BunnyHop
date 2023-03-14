@@ -10,6 +10,12 @@ window.addEventListener('load', function(){
   const pitfallGap = 100;
   const terrainY = canvas.height - 28;
 
+  function createImage(imageSrc){
+    const image = new Image();
+    image.src = imageSrc
+    return image; 
+  }
+
   /////////////////////////////////////////
   ///////////////  Add keys  //////////////
   /////////////////////////////////////////
@@ -107,7 +113,7 @@ window.addEventListener('load', function(){
   }
 
   class Enemy {
-    constructor(){
+    constructor({x, y}){
       this.width = 40
       this.height = 40
       
@@ -117,8 +123,8 @@ window.addEventListener('load', function(){
       }
 
       this.pos = {
-        x: 400,
-        y: terrainY - this.height// - this.speed.y -1
+        x: x,
+        y: y//terrainY - this.height// - this.speed.y -1
       }
 
     }
@@ -174,7 +180,8 @@ window.addEventListener('load', function(){
   let scrollScore = 0;
   // let bunny = new Bunny({x:0, y:0});
   let bunny = new Bunny();
-  let enemy = new Enemy();
+  // let enemy = new Enemy();
+  let enemies = [];
   let terrains = [];
                   //  [new Terrain({x: 60, y: 200, imageSrc: './assets/rectangular.png'}),
                     // new Terrain({x: 200, y: 400, imageSrc: './assets/rectangular.png'})];
@@ -187,33 +194,37 @@ window.addEventListener('load', function(){
   function start(){
     scrollScore = 0;
     bunny = new Bunny({x:0, y:0});
+    enemies = [ new Enemy({x: 1000, y: terrainY - 40}),
+                new Enemy({x: 450, y: 100})
+                // new Enemy({x: 800, y: 100})
+              ];
     terrains = [new Terrain({x: -5, y: terrainY}),
-                      new Terrain({x: 1 * 200-6, y: terrainY}),
-                      new Terrain({x: 2 * 200-6, y: terrainY}),
-                      new Terrain({x: 3 * 200-6 + pitfallGap, y: terrainY}),
-                      new Terrain({x: 450, y: 350}),
-                      new Terrain({x: 4 * 200-6 + 2 * pitfallGap, y: terrainY}),
-                      new Terrain({x: 5 * 200-6 + 2 * pitfallGap, y: terrainY}),
-                      new Terrain({x: 6 * 200-6 + 2 * pitfallGap, y: terrainY}),
-                      new Terrain({x: 7 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
-                      new Terrain({x: 8 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
-                      
-                      new Terrain({x: 8 * 200-6 + 4.5 * pitfallGap, y: 350}),
-                      new Terrain({x: 8.7 * 200-6 + 4.5 * pitfallGap, y: 250}),
+                new Terrain({x: 1 * 200-6, y: terrainY}),
+                new Terrain({x: 2 * 200-6, y: terrainY}),
+                new Terrain({x: 3 * 200-6 + pitfallGap, y: terrainY}),
+                new Terrain({x: 450, y: 350}),
+                new Terrain({x: 4 * 200-6 + 2 * pitfallGap, y: terrainY}),
+                new Terrain({x: 5 * 200-6 + 2 * pitfallGap, y: terrainY}),
+                new Terrain({x: 6 * 200-6 + 2 * pitfallGap, y: terrainY}),
+                new Terrain({x: 7 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
+                new Terrain({x: 8 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
+                
+                new Terrain({x: 8 * 200-6 + 4.5 * pitfallGap, y: 350}),
+                new Terrain({x: 8.7 * 200-6 + 4.5 * pitfallGap, y: 250}),
 
-                      new Terrain({x: 9 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
-                      new Terrain({x: 11 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
-                      new Terrain({x: 12 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
-                      new Terrain({x: 13 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
-                      new Terrain({x: 14 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
-                      new Terrain({x: 15 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
-                      new Terrain({x: 16 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
-                      new Terrain({x: 17 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
-                      // new Terrain({x: 3*200-6 + 100, y: terrainY}),
-                      // new Terrain({x: 3*200-6 + 100, y: terrainY}),
-                    ];
-                    //  [new Terrain({x: 60, y: 200, imageSrc: './assets/rectangular.png'}),
-                      // new Terrain({x: 200, y: 400, imageSrc: './assets/rectangular.png'})];
+                new Terrain({x: 9 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
+                new Terrain({x: 11 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
+                new Terrain({x: 12 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
+                new Terrain({x: 13 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
+                new Terrain({x: 14 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
+                new Terrain({x: 15 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
+                new Terrain({x: 16 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
+                new Terrain({x: 17 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
+                // new Terrain({x: 3*200-6 + 100, y: terrainY}),
+                // new Terrain({x: 3*200-6 + 100, y: terrainY}),
+              ];
+              //  [new Terrain({x: 60, y: 200, imageSrc: './assets/rectangular.png'}),
+                // new Terrain({x: 200, y: 400, imageSrc: './assets/rectangular.png'})];
   }
 
   
@@ -228,25 +239,38 @@ window.addEventListener('load', function(){
 
     terrains.forEach(terrain => {
       terrain.draw();
-    })
+    });
     bunny.update();
-    enemy.update();
+    enemies.forEach(enemy => {
+      enemy.update();
+    });
 
     bunny.speed.x = 0;
     if (keys.ArrowRight.pressed && bunny.pos.x < canvas.width / 2 - bunny.width) {
       bunny.speed.x = universalSpeed;
+      // enemy.speed.x = universalSpeed/10;
     } else if (keys.ArrowLeft.pressed && bunny.pos.x < canvas.width / 2 - bunny.width ){
       bunny.speed.x = -universalSpeed;
+      // enemy.speed.x = universalSpeed/10;
+
     } else {
       bunny.speed.x = 0
 
       if (keys.ArrowRight.pressed) {
         scrollScore += universalSpeed;
+        enemies.forEach(enemy => {
+          enemy.pos.x -= universalSpeed;
+        })
+
         terrains.forEach(terrain => {
           terrain.pos.x -= universalSpeed;
         })
       } else if (keys.ArrowLeft.pressed){
         scrollScore -= universalSpeed;
+        enemies.forEach(enemy => {
+          enemy.pos.x += universalSpeed;
+        })
+
         terrains.forEach(terrain => {
           terrain.pos.x += universalSpeed;
         })
@@ -282,21 +306,23 @@ window.addEventListener('load', function(){
     terrains.forEach(terrain => {
       // top collision with a terrain or a platform
 
-      
-      if (( enemy.pos.y + enemy.height                 <= terrain.pos.y && 
-            enemy.pos.y + enemy.height + enemy.speed.y >= terrain.pos.y &&
-            enemy.pos.x + enemy.width                  >= terrain.pos.x &&
-            enemy.pos.x                                <= terrain.pos.x + terrain.width 
+      for (let i = 0; i < enemies.length; i++){
+        if (( enemies[i].pos.y + enemies[i].height                      <= terrain.pos.y && 
+              enemies[i].pos.y + enemies[i].height + enemies[i].speed.y >= terrain.pos.y &&
+              enemies[i].pos.x + enemies[i].width                       >= terrain.pos.x &&
+              enemies[i].pos.x                                          <= terrain.pos.x + terrain.width 
         ) ||
-      // bottom collision with a terrain or a platform
+    // bottom collision with a terrain or a platform
 
-        (   enemy.pos.y                                >= terrain.pos.y + terrain.height && 
-            enemy.pos.y + enemy.speed.y                <= terrain.pos.y + terrain.height &&
-            enemy.pos.x + enemy.width                  >= terrain.pos.x &&
-            enemy.pos.x                                <= terrain.pos.x + terrain.width )) {
+            ( enemies[i].pos.y                                          >= terrain.pos.y + terrain.height && 
+              enemies[i].pos.y + enemies[i].speed.y                     <= terrain.pos.y + terrain.height &&
+              enemies[i].pos.x + enemies[i].width                       >= terrain.pos.x &&
+              enemies[i].pos.x                                          <= terrain.pos.x + terrain.width )) {
 
-            enemy.speed.y = 0
-        }
+              enemies[i].speed.y = 0
+      }
+      }
+      
     })
 
     if (scrollScore > 3000) console.log('Win!') 

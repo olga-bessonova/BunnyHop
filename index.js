@@ -125,15 +125,12 @@ window.addEventListener('load', function(){
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////  Initialaze instances of classe and some variables  //////////////
+///////////////  Initialaze instances of classes and some variables  //////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
   let scrollScore = 0;
-  let bunny = new Bunny({x:0, y:0});
-  let terrains = [new Terrain({x: -5, y: canvas.height - 28}),
-                    new Terrain({x: 1*200-6, y: canvas.height - 28}),
-                    new Terrain({x: 2*200-6, y: canvas.height - 28}),
-                    new Terrain({x: 3*200-6 + 100, y: canvas.height - 28}),
-                    new Terrain({x: 200, y: 400})];
+  // let bunny = new Bunny({x:0, y:0});
+  let bunny = new Bunny();
+  let terrains = [];
                   //  [new Terrain({x: 60, y: 200, imageSrc: './assets/rectangular.png'}),
                     // new Terrain({x: 200, y: 400, imageSrc: './assets/rectangular.png'})];
 
@@ -148,7 +145,7 @@ window.addEventListener('load', function(){
                       new Terrain({x: 1*200-6, y: canvas.height - 28}),
                       new Terrain({x: 2*200-6, y: canvas.height - 28}),
                       new Terrain({x: 3*200-6 + 100, y: canvas.height - 28}),
-                      new Terrain({x: 200, y: 400})];
+                      new Terrain({x: 400, y: 300})];
                     //  [new Terrain({x: 60, y: 200, imageSrc: './assets/rectangular.png'}),
                       // new Terrain({x: 200, y: 400, imageSrc: './assets/rectangular.png'})];
   }
@@ -192,12 +189,20 @@ window.addEventListener('load', function(){
     // console.log(scrollScore);
 
     terrains.forEach(terrain => {
-      if (bunny.pos.y + bunny.height                 <= terrain.pos.y && 
-          bunny.pos.y + bunny.height + bunny.speed.y >= terrain.pos.y &&
-          bunny.pos.x + bunny.width                  >= terrain.pos.x &&
-          bunny.pos.x                                <= terrain.pos.x + terrain.width 
-        ){
-          bunny.speed.y = 0
+      // top collision with a terrain or a platform
+      if (( bunny.pos.y + bunny.height                 <= terrain.pos.y && 
+            bunny.pos.y + bunny.height + bunny.speed.y >= terrain.pos.y &&
+            bunny.pos.x + bunny.width                  >= terrain.pos.x &&
+            bunny.pos.x                                <= terrain.pos.x + terrain.width 
+        ) ||
+      // bottom collision with a terrain or a platform
+
+        (   bunny.pos.y                                >= terrain.pos.y + terrain.height && 
+            bunny.pos.y + bunny.speed.y                <= terrain.pos.y + terrain.height &&
+            bunny.pos.x + bunny.width                  >= terrain.pos.x &&
+            bunny.pos.x                                <= terrain.pos.x + terrain.width )) {
+
+            bunny.speed.y = 0
         }
     })
 
@@ -208,6 +213,7 @@ window.addEventListener('load', function(){
     }
     
   }
+  start();
   animate();
 
 

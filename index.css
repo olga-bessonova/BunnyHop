@@ -12,7 +12,7 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgb(243, 200, 207);
+  /* background: rgb(243, 200, 207); */
   /* transform: translate(-50%,-50%); */
   border: 5px solid rgb(214, 115, 217);
 }

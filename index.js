@@ -6,7 +6,6 @@ window.addEventListener('load', function(){
 
   canvas.width = 1024;
   canvas.height = 500;
-  let scrollScore = 0;
   const universalSpeed = 5;
 
   /////////////////////////////////////////
@@ -89,9 +88,11 @@ window.addEventListener('load', function(){
       // if (!this.onGround()) 
       if (this.pos.y + this.height + this.speed.y < canvas.height && !this.onGround()){
         this.speed.y += gravity;
-      } else {
-        this.speed.y = 0;
-      }
+      } 
+      // remove else for a pitfall logic
+      //else {
+        //this.speed.y = 0;
+      //}
     }
 
     // check if bunny is on the terrain
@@ -123,13 +124,40 @@ window.addEventListener('load', function(){
   }
 
 
-  const bunny = new Bunny({x:0, y:0});
-  const terrains = [new Terrain({x: 60, y: 200}),
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////  Initialaze instances of classe and some variables  //////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+  let scrollScore = 0;
+  let bunny = new Bunny({x:0, y:0});
+  let terrains = [new Terrain({x: -5, y: canvas.height - 28}),
+                    new Terrain({x: 1*200-6, y: canvas.height - 28}),
+                    new Terrain({x: 2*200-6, y: canvas.height - 28}),
+                    new Terrain({x: 3*200-6 + 100, y: canvas.height - 28}),
                     new Terrain({x: 200, y: 400})];
                   //  [new Terrain({x: 60, y: 200, imageSrc: './assets/rectangular.png'}),
                     // new Terrain({x: 200, y: 400, imageSrc: './assets/rectangular.png'})];
-  
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////  Start function - reassign instances of classes and some variables  //////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+  function start(){
+    scrollScore = 0;
+    bunny = new Bunny({x:0, y:0});
+    terrains = [new Terrain({x: -5, y: canvas.height - 28}),
+                      new Terrain({x: 1*200-6, y: canvas.height - 28}),
+                      new Terrain({x: 2*200-6, y: canvas.height - 28}),
+                      new Terrain({x: 3*200-6 + 100, y: canvas.height - 28}),
+                      new Terrain({x: 200, y: 400})];
+                    //  [new Terrain({x: 60, y: 200, imageSrc: './assets/rectangular.png'}),
+                      // new Terrain({x: 200, y: 400, imageSrc: './assets/rectangular.png'})];
+  }
+
+  
+  
+  /////////////////////////////////////////////////
+  ///////////////  Animate function  //////////////
+ //////////////////////////////////////////////////
   function animate() {
     window.requestAnimationFrame(animate);
     ctx.fillStyle = 'white';
@@ -174,6 +202,10 @@ window.addEventListener('load', function(){
     })
 
     if (scrollScore > 3000) console.log('Win!') 
+    if (bunny.pos.y > canvas.height) {
+      console.log('Lose!');
+      start();
+    }
     
   }
   animate();

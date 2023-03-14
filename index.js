@@ -79,6 +79,9 @@ window.addEventListener('load', function(){
       }
       this.width = 40
       this.height = 40
+      this.image = document.getElementById('bunny')
+      this.frameX = 0
+      this.frameY = 0 
     }
 
     draw(){
@@ -86,6 +89,15 @@ window.addEventListener('load', function(){
       ctx.strokeRect(this.pos.x, this.pos.y, this.width, this.height);
       ctx.fillStyle = 'red';
       ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+      ctx.drawImage(this.image, 
+                    this.frameX * this.width, this.frameY * this.height,
+                    this.width, this.height,
+                    this.pos.x, this.pos.y, this.width, this.height);
+      // ctx.drawImage(this.image, this.pos.x, this.pos.y, 
+      //              this.width, this.height);
+
+                    
+
     }
 
     update(){

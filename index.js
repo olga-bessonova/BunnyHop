@@ -1,9 +1,13 @@
+// import terrain from './assets/rectangular.png'
+
 window.addEventListener('load', function(){
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
 
   canvas.width = 1024;
   canvas.height = 500;
+  let scrollScore = 0;
+  const universalSpeed = 5;
 
   /////////////////////////////////////////
   ///////////////  Add keys  //////////////
@@ -27,7 +31,8 @@ window.addEventListener('load', function(){
         keys.ArrowLeft.pressed = true
         break 
       case ' ':
-        if (bunny.onTerrain()) bunny.speed.y = -25
+        if (bunny.onGround()) bunny.speed.y = -25
+        else if (bunny.speed.y === 0) bunny.speed.y = -25
         else bunny.speed.y = 0
         break
     }
@@ -76,13 +81,13 @@ window.addEventListener('load', function(){
     update(){
       this.draw();
       this.pos.x += this.speed.x;
-      if (this.pos.x < 0) this.pos.x = 0;
-      else if (this.pos.x + this.width >= canvas.width) this.pos.x = canvas.width - this.width;
+      // if (this.pos.x < 0) this.pos.x = 0;
+      // else if (this.pos.x + this.width >= canvas.width) this.pos.x = canvas.width - this.width;
 
-      //console.log(this.onTerrain());
+      //console.log(this.onGround());
       this.pos.y += this.speed.y
-      // if (!this.onTerrain()) 
-      if (this.pos.y + this.height + this.speed.y < canvas.height && !this.onTerrain()){
+      // if (!this.onGround()) 
+      if (this.pos.y + this.height + this.speed.y < canvas.height && !this.onGround()){
         this.speed.y += gravity;
       } else {
         this.speed.y = 0;
@@ -90,31 +95,39 @@ window.addEventListener('load', function(){
     }
 
     // check if bunny is on the terrain
-    onTerrain(){
+    onGround(){
       return this.pos.y >= canvas.height - this.height;
     }
   }
 
   class Terrain {
-    constructor() {
+    constructor({x,y}) {
+      // constructor({x,y, imageSrc}) {
       this.pos = {
-        x: 60,
-        y: 400
+        x: x,
+        y: y
       }
-
-      this.width = 300
+      
+      // this.image = imageSrc
+      // this.width = this.image.width
+      // this.height = this.image.height
+      this.width = 200
       this.height = 30
     }
 
     draw() {
       ctx.fillStyle = 'black'
       ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height)
-    }
+      // ctx.drawImage(this.image, this.pos.x, this.pos.y);
+    } 
   }
 
 
   const bunny = new Bunny({x:0, y:0});
-  const terrain = new Terrain();
+  const terrains = [new Terrain({x: 60, y: 200}),
+                    new Terrain({x: 200, y: 400})];
+                  //  [new Terrain({x: 60, y: 200, imageSrc: './assets/rectangular.png'}),
+                    // new Terrain({x: 200, y: 400, imageSrc: './assets/rectangular.png'})];
   
 
   function animate() {
@@ -122,23 +135,51 @@ window.addEventListener('load', function(){
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
+    terrains.forEach(terrain => {
+      terrain.draw();
+    })
     bunny.update();
-    terrain.draw();
+     
 
     bunny.speed.x = 0;
-    if (keys.ArrowRight.pressed) bunny.speed.x = 5
-    else if (keys.ArrowLeft.pressed) bunny.speed.x = -5
-    else bunny.speed.x = 0
+    if (keys.ArrowRight.pressed && bunny.pos.x < canvas.width - bunny.width) {
+      bunny.speed.x = universalSpeed;
+    } else if (keys.ArrowLeft.pressed && bunny.pos.x > 0){
+      bunny.speed.x = -universalSpeed;
+    } else {
+      bunny.speed.x = 0
 
-    if (bunny.pos.y + bunny.height <= terrain.pos.y && 
-        bunny.pos.y + bunny.height + bunny.speed.y >= terrain.pos.y &&
-        bunny.pos.x + bunny.width >= terrain.pos.x &&
-        bunny.pos.x               <= terrain.pos.x + terrain.width 
+      if (keys.ArrowRight.pressed) {
+        scrollScore += universalSpeed;
+        terrains.forEach(terrain => {
+          terrain.pos.x -= universalSpeed;
+        })
+      } else if (keys.ArrowLeft.pressed){
+        scrollScore -= universalSpeed;
+        terrains.forEach(terrain => {
+          terrain.pos.x += universalSpeed;
+        })
+      }
+    }
+    // console.log(scrollScore);
+
+    terrains.forEach(terrain => {
+      if (bunny.pos.y + bunny.height                 <= terrain.pos.y && 
+          bunny.pos.y + bunny.height + bunny.speed.y >= terrain.pos.y &&
+          bunny.pos.x + bunny.width                  >= terrain.pos.x &&
+          bunny.pos.x                                <= terrain.pos.x + terrain.width 
         ){
           bunny.speed.y = 0
         }
+    })
+
+    if (scrollScore > 3000) console.log('Win!') 
+    
   }
   animate();
+
+
+
 
 
 

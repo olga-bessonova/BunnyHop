@@ -138,14 +138,35 @@ window.addEventListener('load', function(){
 ///////////////  Start function - reassign instances of classes and some variables  //////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+  const pitfallGap = 100;
   function start(){
     scrollScore = 0;
     bunny = new Bunny({x:0, y:0});
     terrains = [new Terrain({x: -5, y: canvas.height - 28}),
-                      new Terrain({x: 1*200-6, y: canvas.height - 28}),
-                      new Terrain({x: 2*200-6, y: canvas.height - 28}),
-                      new Terrain({x: 3*200-6 + 100, y: canvas.height - 28}),
-                      new Terrain({x: 400, y: 300})];
+                      new Terrain({x: 1 * 200-6, y: canvas.height - 28}),
+                      new Terrain({x: 2 * 200-6, y: canvas.height - 28}),
+                      new Terrain({x: 3 * 200-6 + pitfallGap, y: canvas.height - 28}),
+                      new Terrain({x: 450, y: 350}),
+                      new Terrain({x: 4 * 200-6 + 2 * pitfallGap, y: canvas.height - 28}),
+                      new Terrain({x: 5 * 200-6 + 2 * pitfallGap, y: canvas.height - 28}),
+                      new Terrain({x: 6 * 200-6 + 2 * pitfallGap, y: canvas.height - 28}),
+                      new Terrain({x: 7 * 200-6 + 4.5 * pitfallGap, y: canvas.height - 28}),
+                      new Terrain({x: 8 * 200-6 + 4.5 * pitfallGap, y: canvas.height - 28}),
+                      
+                      new Terrain({x: 8 * 200-6 + 4.5 * pitfallGap, y: 350}),
+                      new Terrain({x: 8.7 * 200-6 + 4.5 * pitfallGap, y: 250}),
+
+                      new Terrain({x: 9 * 200-6 + 4.5 * pitfallGap, y: canvas.height - 28}),
+                      new Terrain({x: 11 * 200-6 + 4.5 * pitfallGap, y: canvas.height - 28}),
+                      new Terrain({x: 12 * 200-6 + 4.5 * pitfallGap, y: canvas.height - 28}),
+                      new Terrain({x: 13 * 200-6 + 4.5 * pitfallGap, y: canvas.height - 28}),
+                      new Terrain({x: 14 * 200-6 + 4.5 * pitfallGap, y: canvas.height - 28}),
+                      new Terrain({x: 15 * 200-6 + 4.5 * pitfallGap, y: canvas.height - 28}),
+                      new Terrain({x: 16 * 200-6 + 4.5 * pitfallGap, y: canvas.height - 28}),
+                      new Terrain({x: 17 * 200-6 + 4.5 * pitfallGap, y: canvas.height - 28}),
+                      // new Terrain({x: 3*200-6 + 100, y: canvas.height - 28}),
+                      // new Terrain({x: 3*200-6 + 100, y: canvas.height - 28}),
+                    ];
                     //  [new Terrain({x: 60, y: 200, imageSrc: './assets/rectangular.png'}),
                       // new Terrain({x: 200, y: 400, imageSrc: './assets/rectangular.png'})];
   }
@@ -167,7 +188,7 @@ window.addEventListener('load', function(){
      
 
     bunny.speed.x = 0;
-    if (keys.ArrowRight.pressed && bunny.pos.x < canvas.width - bunny.width) {
+    if (keys.ArrowRight.pressed && bunny.pos.x < canvas.width / 2 - bunny.width) {
       bunny.speed.x = universalSpeed;
     } else if (keys.ArrowLeft.pressed && bunny.pos.x > 0){
       bunny.speed.x = -universalSpeed;

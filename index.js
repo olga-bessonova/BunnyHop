@@ -53,6 +53,7 @@ window.addEventListener('load', function(){
 
 
   const gravity = 1;
+  const posXStart = 20;
 
   class Bunny {
     constructor(pos){
@@ -60,7 +61,7 @@ window.addEventListener('load', function(){
       this.ctx = ctx;
 
       this.pos = {
-        x: 0,
+        x: posXStart,
         y: 0 //canvas.height - this.height
       }
 
@@ -80,7 +81,7 @@ window.addEventListener('load', function(){
     update(){
       this.draw();
       this.pos.x += this.speed.x;
-      // if (this.pos.x < 0) this.pos.x = 0;
+      if (this.pos.x < posXStart) this.pos.x = posXStart;
       // else if (this.pos.x + this.width >= canvas.width) this.pos.x = canvas.width - this.width;
 
       //console.log(this.onGround());
@@ -190,7 +191,7 @@ window.addEventListener('load', function(){
     bunny.speed.x = 0;
     if (keys.ArrowRight.pressed && bunny.pos.x < canvas.width / 2 - bunny.width) {
       bunny.speed.x = universalSpeed;
-    } else if (keys.ArrowLeft.pressed && bunny.pos.x > 0){
+    } else if (keys.ArrowLeft.pressed && bunny.pos.x < canvas.width / 2 - bunny.width ){
       bunny.speed.x = -universalSpeed;
     } else {
       bunny.speed.x = 0
@@ -204,6 +205,11 @@ window.addEventListener('load', function(){
         scrollScore -= universalSpeed;
         terrains.forEach(terrain => {
           terrain.pos.x += universalSpeed;
+        })
+      } else if (bunny.pos.x <= 10 && keys.ArrowLeft.pressed){
+        // scrollScore -= universalSpeed;
+        terrains.forEach(terrain => {
+          terrain.pos.x += 0;
         })
       }
     }

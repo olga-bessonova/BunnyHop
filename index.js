@@ -11,6 +11,7 @@ window.addEventListener('load', function(){
   const terrainY = canvas.height - 28;
   let gameOver = false;
   let gameWin = false;
+  let pause = false;
   
 
 
@@ -278,6 +279,22 @@ window.addEventListener('load', function(){
   }
 
 
+  function pauseButtonListener() {
+    let pauseButton = document.getElementById("pause-button") 
+    let playButton = document.getElementById("play-button") 
+    pauseButton.addEventListener("click", buttonEvent)
+    playButton.addEventListener("click", buttonEvent)
+
+    function buttonEvent(e) {
+      if (pause === true) pause = false;
+      else if (pause === false) pause = true;
+    }
+  }
+
+    // function removeListener() {
+    //     pauseButton.removeEventListener("click", buttonEvent);
+    // }
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////  Initialaze instances of classes and some variables  //////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -360,12 +377,14 @@ window.addEventListener('load', function(){
     let score = Math.floor(scrollScore / 10) + enemyScore;
     ctx.fillText('Score: ' + score, 20, 50);
     if (gameOver) {
+      ctx.font = '50px myFontHack';
       ctx.textAlign = 'center';
       ctx.fillStyle = 'black';
       ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2);
     }
 
     if (gameWin) {
+      ctx.font = '50px myFontHack';
       ctx.textAlign = 'center';
       ctx.fillStyle = 'green';
       ctx.fillText('YOU WIN!', canvas.width / 2, canvas.height / 2);
@@ -485,8 +504,12 @@ window.addEventListener('load', function(){
             start();
           }
           displayInfo(ctx);
-          if (!gameOver && !gameWin ) window.requestAnimationFrame(animate);
-          console.log(terrains[0].pos.x)
+          pauseButtonListener();
+          console.log(pause);
+          if (!gameOver && !gameWin && !pause ) window.requestAnimationFrame(animate);
+          // if (pause) window.requestAnimationFrame(animate);
+
+          // console.log(terrains[0].pos.x)
         }
         start();
         animate();

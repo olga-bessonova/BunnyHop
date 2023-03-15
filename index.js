@@ -10,6 +10,7 @@ window.addEventListener('load', function(){
   const pitfallGap = 100;
   const terrainY = canvas.height - 28;
   let gameOver = false;
+  let gameWin = false;
   
 
 
@@ -41,8 +42,8 @@ window.addEventListener('load', function(){
         keys.ArrowLeft.pressed = true
         break 
       case ' ':
-        if (bunny.onGround()) bunny.speed.y = -25
-        else if (bunny.speed.y === 0) bunny.speed.y = -25
+        if (bunny.onGround()) bunny.speed.y = -18
+        else if (bunny.speed.y === 0) bunny.speed.y = -18
         else bunny.speed.y = 0
         break
     }
@@ -66,6 +67,7 @@ window.addEventListener('load', function(){
   const gravity = 1;
   const posXStart = 20;
 
+  const imgBunnyRun = [21, 27, 37, 43];
   class Bunny {
     constructor(pos){
       this.canvas = canvas;
@@ -81,12 +83,12 @@ window.addEventListener('load', function(){
         y: 0
       }
       this.image = document.getElementById('bunny')
-      this.width = this.image.width / 6
-      this.height = this.image.height
+      this.width = imgBunnyRun[2]//this.image.width / 6
+      this.height = imgBunnyRun[3]//this.image.height
       this.frameX = 0
       this.frameY = 0 
       // sizeAdjustment is needed because bunny has too large padding to all boundaries
-      this.sizeAdjustment = 10
+      this.sizeAdjustment = 0
     }
 
     draw(){
@@ -97,9 +99,13 @@ window.addEventListener('load', function(){
       ctx.stroke();
       // ctx.fillStyle = 'red';
       // ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+      // ctx.drawImage(this.image, 
+      //               this.frameX * this.width, this.frameY * this.height,
+      //               this.width, this.height,
+      //               this.pos.x, this.pos.y, this.width, this.height);
       ctx.drawImage(this.image, 
-                    this.frameX * this.width, this.frameY * this.height,
-                    this.width, this.height,
+        imgBunnyRun[0], imgBunnyRun[1],
+        imgBunnyRun[2], imgBunnyRun[3],
                     this.pos.x, this.pos.y, this.width, this.height);
                      
 
@@ -108,27 +114,52 @@ window.addEventListener('load', function(){
     update(enemies){
       // collision detection
       // console.log(enemies);
-      enemies.forEach(enemy => {
-        const dx = enemy.pos.x - this.pos.x - this.sizeAdjustment;
-        const dy = enemy.pos.y - this.pos.y - this.sizeAdjustment;
-        const distance = Math.sqrt(dx * dx + dy * dy);
+      enemies.forEach((enemy, index) => {
+        // const dx = enemy.pos.x - this.pos.x - this.sizeAdjustment;
+        // const dy = enemy.pos.y - this.pos.y - this.sizeAdjustment;
+        // const dx = enemy.pos.x - this.pos.x - this.sizeAdjustment;
+        // const dy = enemy.pos.y - this.pos.y - this.sizeAdjustment;
+        // const distance = Math.sqrt(dx * dx + dy * dy);
         // console.log(distance);
         // console.log(enemy.pos.y - (this.pos.y + this.height));
 
-        if (enemy.pos.x               >= this.pos.x + this.sizeAdjustment &&
-            enemy.pos.x + enemy.width <= this.pos.x + this.width - this.sizeAdjustment &&
-            enemy.pos.y               >= this.pos.y + this.height - this.sizeAdjustment &&
-            enemy.pos.y - (this.pos.y + this.height - this.sizeAdjustment) <= this.sizeAdjustment
+        // bunny jumps on top of enemy. Top Collision
+        if (enemy.pos.x                <= this.pos.x + this.width &&
+            enemy.pos.x + enemy.width  >= this.pos.x              &&
+            enemy.pos.y >= this.pos.y + this.height &&
+            enemy.pos.y <= this.pos.y + this.height + this.speed.y
+
+            // enemy.pos.y               >= this.pos.y + this.height - this.sizeAdjustment &&
             // enemy.pos.y - (this.pos.y + this.height) <= 1
 
             ){
-              // console.log('enemy defeated');
+              console.log('enemy defeated');
               // bunny jumped on enemy and enemy needs to be removed
-              remove(enemy);
+              remove(enemy, index);
               // console.log(enemies);
 
-        } else if (distance < enemy.width / 2 + this.width / 2) {
-      
+        // } else if (distance < enemy.width / 2 + this.width / 2) {
+        } else if ( 
+                    // enemy touches bunny on the left
+                   (enemy.pos.x + enemy.width  >= this.pos.x  &&
+                    enemy.pos.x                <= this.pos.x  + this.width  &&
+                    enemy.pos.y >= this.pos.y &&
+                    enemy.pos.y + enemy.height <= this.pos.y + this.height) ||
+
+                    // enemy touches bunny on the right
+                   (enemy.pos.x  <= this.pos.x + this.width &&
+                    enemy.pos.x  >= this.pos.x &&
+                    enemy.pos.y >= this.pos.y &&
+                    enemy.pos.y + enemy.height <= this.pos.y + this.height) ||
+
+                    // enemy falls on top of the bunny
+                   (enemy.pos.x + enemy.width >= this.pos.x &&
+                    enemy.pos.x <= this.pos.x + this.width &&
+                    enemy.pos.y + enemy.height === this.pos.y)
+
+        ) {
+          // console.log(this.pos);
+          // console.log(enemy.pos);
           gameOver = true;
           console.log(gameOver);
         }
@@ -206,11 +237,17 @@ window.addEventListener('load', function(){
 
   };
 
-  function remove(enemy){
-    const index = enemies.indexOf(el => {
-      el.pos.x === enemy.pos.x &&
-      el.pos.y === enemy.pos.y
-    })
+  // function remove(enemy){
+  //   const index = enemies.indexOf(el => {
+  //     el.pos.x === enemy.pos.x &&
+  //     el.pos.y === enemy.pos.y
+  //   })
+  //   enemies.splice(index,1);
+  //   enemyScore += 100;
+  //   // return enemies;
+  // }
+
+  function remove(enemy, index){
     enemies.splice(index,1);
     enemyScore += 100;
     // return enemies;
@@ -297,14 +334,20 @@ window.addEventListener('load', function(){
   };
 
   function displayInfo(ctx){
-    ctx.font = '40px Halvetica';
+    ctx.font = '25px Halvetica';
     ctx.fillStyle = 'black';
     let score = Math.floor(scrollScore / 10) + enemyScore;
-    ctx.fillText('SCORE: ' + score, 20, 50);
+    ctx.fillText('Score: ' + score, 20, 50);
     if (gameOver) {
       ctx.textAlign = 'center';
       ctx.fillStyle = 'black';
       ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2);
+    }
+
+    if (gameWin) {
+      ctx.textAlign = 'center';
+      ctx.fillStyle = 'green';
+      ctx.fillText('YOU WIN!', canvas.width / 2, canvas.height / 2);
     }
   };
 
@@ -329,7 +372,7 @@ window.addEventListener('load', function(){
     if (keys.ArrowRight.pressed && bunny.pos.x < canvas.width / 2 - bunny.width) {
       bunny.speed.x = universalSpeed;
       // enemy.speed.x = universalSpeed/10;
-    } else if (keys.ArrowLeft.pressed && bunny.pos.x < canvas.width / 2 - bunny.width ){
+    } else if (keys.ArrowLeft.pressed && bunny.pos.x <= canvas.width / 2 + bunny.width ){
       bunny.speed.x = -universalSpeed;
       // enemy.speed.x = universalSpeed/10;
       
@@ -347,19 +390,22 @@ window.addEventListener('load', function(){
           terrain.pos.x -= universalSpeed;
         })
       } else if (keys.ArrowLeft.pressed){
-        scrollScore -= universalSpeed;
-        enemies.forEach(enemy => {
-          enemy.pos.x += universalSpeed;
-        })
-        
-        terrains.forEach(terrain => {
-          terrain.pos.x += universalSpeed;
-        })
-      } else if (bunny.pos.x <= 10 && keys.ArrowLeft.pressed){
-        // scrollScore -= universalSpeed;
-        terrains.forEach(terrain => {
-          terrain.pos.x += 0;
-        })
+        if (terrains[0].pos.x < 0){
+          
+          scrollScore -= universalSpeed;
+          enemies.forEach(enemy => {
+            enemy.pos.x += universalSpeed;
+          })
+          
+          terrains.forEach(terrain => {
+            terrain.pos.x += universalSpeed;
+          })
+        }
+      // } else if (bunny.pos.x <= 10 && keys.ArrowLeft.pressed){
+      //   // scrollScore -= universalSpeed;
+      //   terrains.forEach(terrain => {
+      //     terrain.pos.x += 0;
+      //   })
       }
     }
     // console.log(scrollScore);
@@ -408,13 +454,17 @@ window.addEventListener('load', function(){
           // console.log(scrollScore);
           // console.log(bunny.pos.x);
           
-          if (scrollScore > 3000) console.log('Win!') 
+          if (scrollScore > 3000) {
+            console.log('Win!') ;
+            gameWin = true;
+          }
           if (bunny.pos.y > canvas.height) {
             console.log('Lose!');
             start();
           }
           displayInfo(ctx);
-          if (!gameOver) window.requestAnimationFrame(animate);
+          if (!gameOver && !gameWin ) window.requestAnimationFrame(animate);
+          // console.log(terrains[0].pos.x)
         }
         start();
         animate();

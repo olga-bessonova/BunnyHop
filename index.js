@@ -9,6 +9,9 @@ window.addEventListener('load', function(){
   const universalSpeed = 5;
   const pitfallGap = 100;
   const terrainY = canvas.height - 28;
+  let gameOver = false;
+  
+
 
   function createImage(imageSrc){
     const image = new Image();
@@ -82,13 +85,15 @@ window.addEventListener('load', function(){
       this.height = this.image.height
       this.frameX = 0
       this.frameY = 0 
+      // sizeAdjustment is needed because bunny has too large padding to all boundaries
+      this.sizeAdjustment = 10
     }
 
     draw(){
       ctx.strokeStyle = 'black';
       ctx.strokeRect(this.pos.x, this.pos.y, this.width, this.height);
       ctx.beginPath();
-      ctx.arc(this.pos.x + this.width/2, this.pos.y + this.height/2, this.width/2 - 10, 0, Math.PI * 2);
+      ctx.arc(this.pos.x + this.width/2, this.pos.y + this.height/2, this.width/2 - this.sizeAdjustment, 0, Math.PI * 2);
       ctx.stroke();
       // ctx.fillStyle = 'red';
       // ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
@@ -100,7 +105,35 @@ window.addEventListener('load', function(){
 
     }
 
-    update(){
+    update(enemies){
+      // collision detection
+      console.log(enemies);
+      enemies.forEach(enemy => {
+        const dx = enemy.pos.x - this.pos.x - this.sizeAdjustment;
+        const dy = enemy.pos.y - this.pos.y - this.sizeAdjustment;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        // console.log(distance);
+        console.log(enemy.pos.y - (this.pos.y + this.height));
+
+        if (enemy.pos.x               >= this.pos.x + this.sizeAdjustment &&
+            enemy.pos.x + enemy.width <= this.pos.x + this.width - this.sizeAdjustment &&
+            enemy.pos.y               >= this.pos.y + this.height - this.sizeAdjustment &&
+            enemy.pos.y - (this.pos.y + this.height - this.sizeAdjustment) <= this.sizeAdjustment
+            // enemy.pos.y - (this.pos.y + this.height) <= 1
+
+            ){
+              console.log('enemy defeated');
+              // bunny jumped on enemy and enemy needs to be removed
+              remove(enemy);
+              // console.log(enemies);
+
+        } else if (distance < enemy.width / 2 + this.width / 2) {
+      
+          gameOver = true;
+          console.log(gameOver);
+        }
+      });
+
       this.draw();
       this.pos.x += this.speed.x;
       if (this.pos.x < posXStart) this.pos.x = posXStart;
@@ -173,6 +206,16 @@ window.addEventListener('load', function(){
 
   };
 
+  function remove(enemy){
+    const index = enemies.indexOf(el => {
+      el.pos.x === enemy.pos.x &&
+      el.pos.y === enemy.pos.y
+    })
+    enemies.splice(index,1);
+    enemyScore += 100;
+    // return enemies;
+  }
+
   class Terrain {
     constructor({x,y}) {
       // constructor({x,y, imageSrc}) {
@@ -200,6 +243,7 @@ window.addEventListener('load', function(){
 ///////////////  Initialaze instances of classes and some variables  //////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
   let scrollScore = 0;
+  let enemyScore = 0;
   // let bunny = new Bunny({x:0, y:0});
   let bunny = new Bunny();
   // let enemy = new Enemy();
@@ -215,9 +259,12 @@ window.addEventListener('load', function(){
 
   function start(){
     scrollScore = 0;
+    enemyScore = 0;
     bunny = new Bunny({x:0, y:0});
-    enemies = [ new Enemy({x: 1000, y: terrainY - 40}),
-                new Enemy({x: 450, y: 100})
+    enemies = [ 
+                new Enemy({x: 450, y: 100}),
+                new Enemy({x: 550, y: terrainY - 40})
+                //new Enemy({x: 1000, y: terrainY - 40}),
                 // new Enemy({x: 800, y: 100})
               ];
     terrains = [new Terrain({x: -5, y: terrainY}),
@@ -247,7 +294,18 @@ window.addEventListener('load', function(){
               ];
               //  [new Terrain({x: 60, y: 200, imageSrc: './assets/rectangular.png'}),
                 // new Terrain({x: 200, y: 400, imageSrc: './assets/rectangular.png'})];
-  }
+  };
+
+  function displayInfo(ctx){
+    ctx.font = '40px Halvetica';
+    ctx.fillStyle = 'black';
+    ctx.fillText('SCORE: ' + scrollScore+enemyScore, 20, 50);
+    if (gameOver) {
+      ctx.textAlign = 'center';
+      ctx.fillStyle = 'black';
+      ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2);
+    }
+  };
 
   
   
@@ -255,18 +313,17 @@ window.addEventListener('load', function(){
   ///////////////  Animate function  //////////////
  //////////////////////////////////////////////////
   function animate() {
-    window.requestAnimationFrame(animate);
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, canvas.width, canvas.height)
-
+    
     terrains.forEach(terrain => {
       terrain.draw();
     });
-    bunny.update();
+    bunny.update(enemies);
     enemies.forEach(enemy => {
       enemy.update();
     });
-
+    
     bunny.speed.x = 0;
     if (keys.ArrowRight.pressed && bunny.pos.x < canvas.width / 2 - bunny.width) {
       bunny.speed.x = universalSpeed;
@@ -274,7 +331,7 @@ window.addEventListener('load', function(){
     } else if (keys.ArrowLeft.pressed && bunny.pos.x < canvas.width / 2 - bunny.width ){
       bunny.speed.x = -universalSpeed;
       // enemy.speed.x = universalSpeed/10;
-
+      
     } else {
       bunny.speed.x = 0
 
@@ -292,7 +349,7 @@ window.addEventListener('load', function(){
         enemies.forEach(enemy => {
           enemy.pos.x += universalSpeed;
         })
-
+        
         terrains.forEach(terrain => {
           terrain.pos.x += universalSpeed;
         })
@@ -304,77 +361,59 @@ window.addEventListener('load', function(){
       }
     }
     // console.log(scrollScore);
-
+    
     terrains.forEach(terrain => {
       // top collision with a terrain or a platform
       if (( bunny.pos.y + bunny.height                 <= terrain.pos.y && 
-            bunny.pos.y + bunny.height + bunny.speed.y >= terrain.pos.y &&
-            bunny.pos.x + bunny.width                  >= terrain.pos.x &&
-            bunny.pos.x                                <= terrain.pos.x + terrain.width 
+        bunny.pos.y + bunny.height + bunny.speed.y >= terrain.pos.y &&
+        bunny.pos.x + bunny.width                  >= terrain.pos.x &&
+        bunny.pos.x                                <= terrain.pos.x + terrain.width 
         ) ||
-      // bottom collision with a terrain or a platform
-
+        // bottom collision with a terrain or a platform
+        
         (   bunny.pos.y                                >= terrain.pos.y + terrain.height && 
             bunny.pos.y + bunny.speed.y                <= terrain.pos.y + terrain.height &&
             bunny.pos.x + bunny.width                  >= terrain.pos.x &&
             bunny.pos.x                                <= terrain.pos.x + terrain.width )) {
+              
+              bunny.speed.y = 0
+            }
+          })
 
-            bunny.speed.y = 0
-        }
-    })
 
-
-
-    terrains.forEach(terrain => {
-      // top collision with a terrain or a platform
-
-      for (let i = 0; i < enemies.length; i++){
-        if (( enemies[i].pos.y + enemies[i].height                      <= terrain.pos.y && 
-              enemies[i].pos.y + enemies[i].height + enemies[i].speed.y >= terrain.pos.y &&
-              enemies[i].pos.x + enemies[i].width                       >= terrain.pos.x &&
-              enemies[i].pos.x                                          <= terrain.pos.x + terrain.width 
+          
+          terrains.forEach(terrain => {
+            // top collision with a terrain or a platform
+            
+            for (let i = 0; i < enemies.length; i++){
+              if (( enemies[i].pos.y + enemies[i].height                      <= terrain.pos.y && 
+                enemies[i].pos.y + enemies[i].height + enemies[i].speed.y >= terrain.pos.y &&
+                enemies[i].pos.x + enemies[i].width                       >= terrain.pos.x &&
+                enemies[i].pos.x                                          <= terrain.pos.x + terrain.width 
         ) ||
-    // bottom collision with a terrain or a platform
-
-            ( enemies[i].pos.y                                          >= terrain.pos.y + terrain.height && 
+        // bottom collision with a terrain or a platform
+        
+        ( enemies[i].pos.y                                          >= terrain.pos.y + terrain.height && 
               enemies[i].pos.y + enemies[i].speed.y                     <= terrain.pos.y + terrain.height &&
               enemies[i].pos.x + enemies[i].width                       >= terrain.pos.x &&
               enemies[i].pos.x                                          <= terrain.pos.x + terrain.width )) {
 
-              enemies[i].speed.y = 0
-      }
-      }
-      
-    })
-
-    if (scrollScore > 3000) console.log('Win!') 
-    if (bunny.pos.y > canvas.height) {
-      console.log('Lose!');
-      start();
-    }
-    
-  }
-  start();
-  animate();
-
-//   function gameOver() {
-//     let startDiv = document.getElementById("start");
-//     let gameCanvas = document.getElementById("canvas");
-//     let gameOver = document.getElementById("game-over");
-//     startDiv.style.display = "none";
-//     gameCanvas.style.display = "none";
-//     gameOver.style.display = "block";
-
-//     ball.reset();
-//     player1.reset();
-//     player2.reset();
-
-//     clearInterval(loop);
-// }
-
-
-
-
+                enemies[i].speed.y = 0
+              }
+            }
+            
+          })
+          
+          if (scrollScore > 3000) console.log('Win!') 
+          if (bunny.pos.y > canvas.height) {
+            console.log('Lose!');
+            start();
+          }
+          
+          if (!gameOver) window.requestAnimationFrame(animate);
+        }
+        start();
+        animate();
   
 });
 

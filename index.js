@@ -284,10 +284,12 @@ window.addEventListener('load', function(){
     let playButton = document.getElementById("play-button") 
     pauseButton.addEventListener("click", buttonEvent)
     playButton.addEventListener("click", buttonEvent)
-
+    
     function buttonEvent(e) {
-      if (pause === true) pause = false;
-      else if (pause === false) pause = true;
+      if (pause === true) {
+        pause = false;
+        // animate();
+      } else if (pause === false) pause = true;
     }
   }
 
@@ -513,6 +515,7 @@ window.addEventListener('load', function(){
         }
         start();
         animate();
+
   
 });
 

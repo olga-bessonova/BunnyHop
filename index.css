@@ -1,3 +1,7 @@
+@font-face{
+  font-family: myFont;
+}
+
 body {
   background: rgb(255, 210, 85);
   margin: 0px;
@@ -18,6 +22,108 @@ body {
   border: 5px solid rgb(214, 115, 217);
 }
 
-/* #bunny {
+#bunny, #ghost {
   display: none;
-} */
+}
+
+
+#main-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1200px;
+  height: 700px;
+}
+
+h1 {
+  font-family: 'Courier New';
+  font-size: 40px;
+  /* position:absolute; */
+  text-align:center;
+}
+
+#instructions {
+  font-family: 'Courier New';
+  
+}
+
+
+#control {
+    font-family: 'Courier New';
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90px;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    font-family: 'Courier New';
+    text-align: center;
+    padding: 10px;
+}
+
+#pause-button {
+    position: absolute;
+    left: 400px;
+    top: -15px;
+    font-size: medium;
+    padding-bottom: 10px;
+}
+
+#restart-button {
+    position: absolute;
+    top: 10px;
+    left: 400px;
+    font-size: medium;
+}
+
+
+
+
+
+
+#navigation-bar {
+  position: absolute;
+  top: -3%;
+  right: 0px;
+}
+
+#navigation-bar ul {
+  display: flex;
+}
+
+#navigation-bar li {
+  list-style-type: none
+}
+
+
+a {
+  color: inherit;
+}
+
+i {
+  margin: 3px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+  background-color: black;
+  margin: 10px;
+  padding: 10px;
+  width: 200px;
+  position:absolute;
+  top: 55px;
+  right: 3px;
+  z-index: 5;
+}
+
+i:hover + .hidden {
+  display: flex;
+}

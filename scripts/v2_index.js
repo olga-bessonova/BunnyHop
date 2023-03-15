@@ -92,11 +92,11 @@ window.addEventListener('load', function(){
     }
 
     draw(){
-      // ctx.strokeStyle = 'black';
-      // ctx.strokeRect(this.pos.x, this.pos.y, this.width, this.height);
-      // ctx.beginPath();
-      // ctx.arc(this.pos.x + this.width/2, this.pos.y + this.height/2, this.width/2 - this.sizeAdjustment, 0, Math.PI * 2);
-      // ctx.stroke();
+      ctx.strokeStyle = 'black';
+      ctx.strokeRect(this.pos.x, this.pos.y, this.width, this.height);
+      ctx.beginPath();
+      ctx.arc(this.pos.x + this.width/2, this.pos.y + this.height/2, this.width/2 - this.sizeAdjustment, 0, Math.PI * 2);
+      ctx.stroke();
       // ctx.fillStyle = 'red';
       // ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
       // ctx.drawImage(this.image, 
@@ -134,7 +134,6 @@ window.addEventListener('load', function(){
 
             ){
               console.log('enemy defeated');
-              this.speed.y = -10;
               // bunny jumped on enemy and enemy needs to be removed
               remove(enemy, index);
               // console.log(enemies);
@@ -191,8 +190,7 @@ window.addEventListener('load', function(){
 
   class Enemy {
     constructor({x, y}){
-           
-      
+            
       this.speed = {
         x: 0.5,
         y: 0
@@ -210,11 +208,11 @@ window.addEventListener('load', function(){
 
     }
     draw(){
-      // ctx.strokeStyle = 'black';
-      // ctx.strokeRect(this.pos.x, this.pos.y, this.width, this.height);
-      // ctx.beginPath();
-      // ctx.arc(this.pos.x + this.width/2, this.pos.y + this.height/2, this.width/2, 0, Math.PI * 2);
-      // ctx.stroke();
+      ctx.strokeStyle = 'black';
+      ctx.strokeRect(this.pos.x, this.pos.y, this.width, this.height);
+      ctx.beginPath();
+      ctx.arc(this.pos.x + this.width/2, this.pos.y + this.height/2, this.width/2, 0, Math.PI * 2);
+      ctx.stroke();
       // ctx.fillStyle = 'grey';
       // ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
       ctx.drawImage(this.image, 
@@ -302,24 +300,9 @@ window.addEventListener('load', function(){
     bunny = new Bunny({x:0, y:0});
     enemies = [ 
                 new Enemy({x: 450, y: 100}),
-                new Enemy({x: 550, y: terrainY - 40}),
-                new Enemy({x: 1290, y: 350 - 40}),
-                // new Enemy({x: 1290 - 40, y: 350 - 40}),
-                new Enemy({x: 1290 - 40, y: terrainY - 40}),
-                new Enemy({x: 1790, y: 150 - 40}),
-                new Enemy({x: 1790 - 40, y: 150 - 40}),
-                new Enemy({x: 1790 - 40*2, y: 150 - 40}),
-
-                new Enemy({x: 1790 - 40*2, y: 150 - 40}),
-                new Enemy({x: 1790 - 40*2, y: 150 - 40}),
-
-                new Enemy({x: 8 * 200-6 + 4.5 * pitfallGap + 170, y: 350 - 40}),
-                new Enemy({x: 8 * 200-6 + 4.5 * pitfallGap + 170 - 40, y: 250 - 40}),
-
-                new Enemy({x: 3300, y: 150 - 40}),
-                new Enemy({x: 3300 - 40*1, y: terrainY - 40}),
-                new Enemy({x: 3300 - 40*2, y: terrainY - 40})
-                
+                new Enemy({x: 550, y: terrainY - 40})
+                //new Enemy({x: 1000, y: terrainY - 40}),
+                // new Enemy({x: 800, y: 100})
               ];
     terrains = [new Terrain({x: -5, y: terrainY}),
                 new Terrain({x: 1 * 200-6, y: terrainY}),
@@ -329,15 +312,11 @@ window.addEventListener('load', function(){
                 new Terrain({x: 4 * 200-6 + 2 * pitfallGap, y: terrainY}),
                 new Terrain({x: 5 * 200-6 + 2 * pitfallGap, y: terrainY}),
                 new Terrain({x: 6 * 200-6 + 2 * pitfallGap, y: terrainY}),
-                new Terrain({x: 1100, y: 350}),
-                new Terrain({x: 1250, y: 200}),
-                new Terrain({x: 1600, y: 150}),
-
                 new Terrain({x: 7 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
                 new Terrain({x: 8 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
                 
                 new Terrain({x: 8 * 200-6 + 4.5 * pitfallGap, y: 350}),
-                new Terrain({x: 8.9 * 200-6 + 4.5 * pitfallGap, y: 250}),
+                new Terrain({x: 8.7 * 200-6 + 4.5 * pitfallGap, y: 250}),
 
                 new Terrain({x: 9 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
                 new Terrain({x: 11 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
@@ -392,20 +371,19 @@ window.addEventListener('load', function(){
     bunny.speed.x = 0;
     if (keys.ArrowRight.pressed && bunny.pos.x < canvas.width / 2) {
       bunny.speed.x = universalSpeed;
-      scrollScore += universalSpeed;
       // enemy.speed.x = universalSpeed/10;
-    } else if (keys.ArrowLeft.pressed && bunny.pos.x < canvas.width / 2 ){
-      
-        bunny.speed.x = -universalSpeed;
-        scrollScore -= universalSpeed;
+    } else if ((keys.ArrowLeft.pressed && bunny.pos.x > 10) ||
+               (keys.ArrowLeft.pressed && scrollScore === 0 && bunny.pos.x > 10)){
 
+                
+      bunny.speed.x = -universalSpeed;
       // enemy.speed.x = universalSpeed/10;
       
     } else {
       bunny.speed.x = 0
       
       if (keys.ArrowRight.pressed) {
-        // scrollScore += bunny.pos.x;
+        // scrollScore = bunny.pos.x;
         scrollScore += universalSpeed;
         enemies.forEach(enemy => {
           enemy.pos.x -= universalSpeed;
@@ -486,7 +464,7 @@ window.addEventListener('load', function(){
           }
           displayInfo(ctx);
           if (!gameOver && !gameWin ) window.requestAnimationFrame(animate);
-          console.log(terrains[0].pos.x)
+          // console.log(terrains[0].pos.x)
         }
         start();
         animate();

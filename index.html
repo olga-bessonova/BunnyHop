@@ -5,20 +5,71 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="index.css">
-  <title>Game</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- <link rel="icon" href="./assets/icon/carrot-solid.svg"> -->
+  <link rel="icon" href="./assets/icon/bunny.png">
+  
+  <!-- <link rel="icon" href="https://fontawesome.com/icons/rabbit?s=light&f=classic"> -->
+  <title>Bunny Hop</title>
 </head>
 <body>
-  <canvas id="canvas"></canvas>
-  <img id="bunny" src="./assets/bunnypack_assets/bunnypack_spritesheets/bunny_run_strip6_bigger.png">
-  <img id="ghost" src="./assets/PlatformerPack/ghost1_fly_1_192x32.png">
-  <img id="terrain" src="./assets/rectangular.png">
-  <!-- <img id="background" src="./assets/autumn-landscape-background/background.jpg"> -->
-  <script src="index.js"></script>
-  <!-- <script src="test.js"></script> -->
-  <div id="you-win" style="display:none">
-    <h1>You Win!</h1>
-    <!-- <a href="#" onclick="startGame()">Start Game</a> -->
-</div>
+
+
+  <section id="main-container">
+    <h1>BUNNY HOP</h1>
+
+
+    <section id="control">
+        <ul>
+            <!-- <li id="play-button">Play</li> -->
+            <li id="restart-button">Restart</li>
+            <li id="pause-button">Pause</li>
+        </ul>
+    </section>
+
+    <nav id="navigation-bar">
+        <ul>
+            <li><a href="https://github.com/olga-bessonova/BunnyHop">
+              <i class="fa-brands fa-github fa-3x"></i>
+            </a></li>
+
+            <li><a href="https://www.linkedin.com/in/olga-borovikova/">
+              <i class="fa-brands fa-linkedin-in fa-3x"></i>
+            </a></li>
+        </ul>
+    </nav>
+
+    <section id="canvas-container">
+      <canvas id="canvas"></canvas>
+    </section>
+    
+    <section id="instructions">
+      <i class="fa-solid fa-carrot fa-4x"></i>
+        <p id="instructions" >
+            Click Play to start the game.
+            <br>
+            Click Restart to reset the game.
+            <br><br>
+            How to Play:
+            <br>
+            Use left and right arrows to move, and space to jump.
+        </p>
+    </section>
+
+
+
+    <img id="bunny" src="./assets/bunnypack_assets/bunnypack_spritesheets/bunny_run_strip6_bigger.png">
+    <img id="ghost" src="./assets/PlatformerPack/ghost1_fly_1_192x32.png">
+
+    <script src="index.js"></script>
+
+    <div id="you-win" style="display:none">
+      <h1>You Win!</h1>
+      <!-- <a href="#" onclick="startGame()">Start Game</a> -->
+    </div>
+</section>
+
+
   
 </body>
 </html>

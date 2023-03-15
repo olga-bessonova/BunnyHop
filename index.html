@@ -13,22 +13,39 @@
   <title>Bunny Hop</title>
 </head>
 <body>
+  <h1 id="game-name">BUNNY HOP</h1>
 
-
-  <section id="main-container">
-    <h1>BUNNY HOP</h1>
-
-
+  <!-- <section id="main-container">
     <section id="control">
-        <ul>
-            <!-- <li id="play-button">Play</li> -->
-            <li id="restart-button">Restart</li>
-            <li id="pause-button">Pause</li>
-        </ul>
-    </section>
+      <ul>
+          <li id="play-button">Play</li>
+          <li id="restart-button">
+            <a href="#">
+              <i class="fa-solid fa-play fa-2x"></i> Restart
+            </a>  
+          </li>
+          <li id="pause-button">
+            <a href="#">
+              <i class="fa-solid fa-pause fa-2x"></i> Pause
+            </a>
+          </li>
+      </ul>
+  </section>-->
 
-    <nav id="navigation-bar">
+  
+
+   
+    <div id="links-and-canvas">
+      <div id="navigation-bar">
         <ul>
+          <li id="restart-button">
+            <a href="#">
+              <i class="fa-solid fa-play fa-3x"></i>
+            </a></li>
+          <li id="pause-button">
+            <a href="#">
+              <i class="fa-solid fa-pause fa-3x"></i>
+            </a></li>
             <li><a href="https://github.com/olga-bessonova/BunnyHop">
               <i class="fa-brands fa-github fa-3x"></i>
             </a></li>
@@ -37,15 +54,15 @@
               <i class="fa-brands fa-linkedin-in fa-3x"></i>
             </a></li>
         </ul>
-    </nav>
+      </div>
 
     <section id="canvas-container">
       <canvas id="canvas"></canvas>
     </section>
-    
+
     <section id="instructions">
-      <i class="fa-solid fa-carrot fa-4x"></i>
-        <p id="instructions" >
+      <i class="fa-solid fa-carrot fa-3x"></i>
+        <p id="instructions-paragraph" >
             Click Play to start the game.
             <br>
             Click Restart to reset the game.
@@ -55,6 +72,14 @@
             Use left and right arrows to move, and space to jump.
         </p>
     </section>
+    
+    </div>
+
+    <!-- <br> -->
+
+    
+    
+    
 
 
 

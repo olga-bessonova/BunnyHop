@@ -13,6 +13,11 @@ body {
   margin: 0px;
 }
 
+li {
+  list-style-type: none;
+  text-align: center;
+}
+
 #canvas {
   padding: 0;
   margin: auto;
@@ -33,36 +38,44 @@ body {
 }
 
 
-#main-container {
+/* #main-container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 1200px;
   height: 700px;
-}
+} */
+
 
 h1 {
   font-family: "myFontHack", "myFontSnes", 'Courier New';
   font-size: 60px;
-  /* position:absolute; */
-  text-align:center;
-  margin: 10px;
+  width: 100%;
+  text-align: center;
+  /* margin: 10px; */
 }
 
 #instructions {
   font-family: 'Courier New';
-  
+  position: absolute;
+  /* top: 550px; */
+  text-align: center;
 }
 
-
-#control {
+#links-and-canvas{
+  width: 1034px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-end;
+}
+/* #control {
     font-family: 'Courier New';
     font-size: 20px;
     cursor: pointer;
-}
+} */
 
-#play-button {
+/* #play-button {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -80,14 +93,14 @@ h1 {
     top: -15px;
     font-size: medium;
     padding-bottom: 10px;
-}
+} */
 
-#restart-button {
+/* #restart-button {
     position: absolute;
     top: 10px;
     left: 400px;
     font-size: medium;
-}
+} */
 
 
 
@@ -95,43 +108,50 @@ h1 {
 
 
 #navigation-bar {
-  position: absolute;
-  top: -2%;
-  right: 100px;
+  /* width: 1240px; */
+  /* position: absolute; */
+  float: right;
+  list-style: none;
+  /* display: block; */
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  /* top: -2%; */
+  /* right: 100px; */
   /* bottom: ; */
 }
 
 #navigation-bar ul {
-  display: flex;
+  text-align: center;
+  /* display: flex; */
+  /* float: right; */
+  /* margin-right: 100px; */
+  /* margin-top: 120px; */
+}
+#navigation-bar li {
+  display: inline-block;
+  /* float: left; */
+  margin-right: 10px;
 }
 
-#navigation-bar li {
+/* #navigation-bar ul {
+  padding: 10px;
+} */
+
+
+
+/* #navigation-bar li {
   list-style-type: none
-}
+} */
 
 
 a {
   color: inherit;
 }
 
-i {
-  margin: 3px;
-  padding: 5px;
-  cursor: pointer;
+a:link { 
+  text-decoration: none; 
 }
 
-.hidden {
-  display: none;
-  background-color: black;
-  margin: 10px;
-  padding: 10px;
-  width: 200px;
-  position:absolute;
-  top: 55px;
-  right: 3px;
-  z-index: 5;
-}
 
-i:hover + .hidden {
-  display: flex;
-}
+

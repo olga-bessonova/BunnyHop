@@ -1,5 +1,11 @@
 @font-face{
-  font-family: myFont;
+  font-family: myFontSnes;
+  src: url(./assets/fonts/snes-font/SnesItalic-1G9Be.ttf) format("truetype");
+}
+
+@font-face{
+  font-family: myFontHack;
+  src: url(./assets/fonts/hackbot-font/HackbotFreeTrial-8MgA2.otf) format("opentype");
 }
 
 body {
@@ -37,10 +43,11 @@ body {
 }
 
 h1 {
-  font-family: 'Courier New';
-  font-size: 40px;
+  font-family: "myFontHack", "myFontSnes", 'Courier New';
+  font-size: 60px;
   /* position:absolute; */
   text-align:center;
+  margin: 10px;
 }
 
 #instructions {
@@ -89,8 +96,9 @@ h1 {
 
 #navigation-bar {
   position: absolute;
-  top: -3%;
-  right: 0px;
+  top: -2%;
+  right: 100px;
+  /* bottom: ; */
 }
 
 #navigation-bar ul {

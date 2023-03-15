@@ -107,13 +107,13 @@ window.addEventListener('load', function(){
 
     update(enemies){
       // collision detection
-      console.log(enemies);
+      // console.log(enemies);
       enemies.forEach(enemy => {
         const dx = enemy.pos.x - this.pos.x - this.sizeAdjustment;
         const dy = enemy.pos.y - this.pos.y - this.sizeAdjustment;
         const distance = Math.sqrt(dx * dx + dy * dy);
         // console.log(distance);
-        console.log(enemy.pos.y - (this.pos.y + this.height));
+        // console.log(enemy.pos.y - (this.pos.y + this.height));
 
         if (enemy.pos.x               >= this.pos.x + this.sizeAdjustment &&
             enemy.pos.x + enemy.width <= this.pos.x + this.width - this.sizeAdjustment &&
@@ -122,7 +122,7 @@ window.addEventListener('load', function(){
             // enemy.pos.y - (this.pos.y + this.height) <= 1
 
             ){
-              console.log('enemy defeated');
+              // console.log('enemy defeated');
               // bunny jumped on enemy and enemy needs to be removed
               remove(enemy);
               // console.log(enemies);
@@ -299,7 +299,8 @@ window.addEventListener('load', function(){
   function displayInfo(ctx){
     ctx.font = '40px Halvetica';
     ctx.fillStyle = 'black';
-    ctx.fillText('SCORE: ' + scrollScore+enemyScore, 20, 50);
+    let score = Math.floor(scrollScore / 10) + enemyScore;
+    ctx.fillText('SCORE: ' + score, 20, 50);
     if (gameOver) {
       ctx.textAlign = 'center';
       ctx.fillStyle = 'black';
@@ -334,8 +335,9 @@ window.addEventListener('load', function(){
       
     } else {
       bunny.speed.x = 0
-
+      
       if (keys.ArrowRight.pressed) {
+        // scrollScore = bunny.pos.x;
         scrollScore += universalSpeed;
         enemies.forEach(enemy => {
           enemy.pos.x -= universalSpeed;
@@ -403,13 +405,15 @@ window.addEventListener('load', function(){
             }
             
           })
+          // console.log(scrollScore);
+          // console.log(bunny.pos.x);
           
           if (scrollScore > 3000) console.log('Win!') 
           if (bunny.pos.y > canvas.height) {
             console.log('Lose!');
             start();
           }
-          
+          displayInfo(ctx);
           if (!gameOver) window.requestAnimationFrame(animate);
         }
         start();

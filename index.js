@@ -355,7 +355,7 @@ window.addEventListener('load', function(){
   };
 
   function displayInfo(ctx){
-    ctx.font = '25px Halvetica';
+    ctx.font = '25px myFontHack';
     ctx.fillStyle = 'black';
     let score = Math.floor(scrollScore / 10) + enemyScore;
     ctx.fillText('Score: ' + score, 20, 50);

@@ -23,11 +23,11 @@ li {
   margin: auto;
   /* display: block; */
   
-  position: absolute;
+  /* position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
-  right: 0;
+  right: 0; */
   /* background: rgb(243, 200, 207); */
   /* transform: translate(-50%,-50%); */
   border: 5px solid rgb(214, 115, 217);
@@ -58,16 +58,17 @@ h1 {
 
 #instructions {
   font-family: 'Courier New';
-  position: absolute;
+  /* position: absolute; */
   /* top: 550px; */
   text-align: center;
+  margin-top: 40px;
 }
 
 #links-and-canvas{
   width: 1034px;
   margin: 0 auto;
-  display: flex;
-  justify-content: flex-end;
+  /* display: flex; */
+  /* justify-content: flex-end; */
 }
 /* #control {
     font-family: 'Courier New';

@@ -45,7 +45,8 @@ window.addEventListener('load', function(){
         faceSide = 'left'
         break 
       case ' ':
-        bunny.changeSprite(bunnySpriteRunRight)
+        if (faceSide === 'right') bunny.changeSprite(bunnySpriteRunRight)
+        else bunny.changeSprite(bunnySpriteRunLeft)
         if (bunny.onGround()) bunny.speed.y = -18
         else if (bunny.speed.y === 0) bunny.speed.y = -18
         else bunny.speed.y = 0
@@ -65,6 +66,10 @@ window.addEventListener('load', function(){
         keys.ArrowLeft.pressed = false
         bunny.changeSprite(bunnySpriteStandLeft)
         faceSide = 'left'
+        break 
+      case ' ':
+        if (faceSide === 'right') bunny.changeSprite(bunnySpriteStandRight)
+        else bunny.changeSprite(bunnySpriteStandLeft)
         break 
     }
   })

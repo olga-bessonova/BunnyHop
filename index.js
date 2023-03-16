@@ -12,6 +12,8 @@ window.addEventListener('load', function(){
   let gameOver = false;
   let gameWin = false;
   let pause = false;
+  let restart = false;
+
   
 
 
@@ -281,9 +283,7 @@ window.addEventListener('load', function(){
 
   function pauseButtonListener() {
     let pauseButton = document.getElementById("pause-button") 
-    let playButton = document.getElementById("play-button") 
     pauseButton.addEventListener("click", buttonEvent)
-    playButton.addEventListener("click", buttonEvent)
     
     function buttonEvent(e) {
       if (pause === true) {
@@ -292,6 +292,24 @@ window.addEventListener('load', function(){
       } else if (pause === false) pause = true;
     }
   }
+
+  // function restartButtonListener() {
+  //   let restartButton = document.getElementById("restart-button") 
+  //   restartButton.addEventListener("click", buttonEventRestart)
+    
+  //   function buttonEventRestart(e) {
+  //     restart = true
+  //   }
+  // }
+
+
+  let restartButton = document.getElementById("restart-button");
+  restartButton.addEventListener('click', () => {
+    // window.location.reload(false);
+    start();
+    // animate();
+  })
+  
 
     // function removeListener() {
     //     pauseButton.removeEventListener("click", buttonEvent);
@@ -303,8 +321,8 @@ window.addEventListener('load', function(){
   let scrollScore = 0;
   let enemyScore = 0;
   // let bunny = new Bunny({x:0, y:0});
-  let bunny = new Bunny();
   // let enemy = new Enemy();
+  let bunny = new Bunny();
   let enemies = [];
   let terrains = [];
                   //  [new Terrain({x: 60, y: 200, imageSrc: './assets/rectangular.png'}),
@@ -318,9 +336,8 @@ window.addEventListener('load', function(){
   function start(){
     scrollScore = 0;
     enemyScore = 0;
-    bunny = new Bunny({x:0, y:0});
     enemies = [ 
-                new Enemy({x: 450, y: 100}),
+      new Enemy({x: 450, y: 100}),
                 new Enemy({x: 550, y: terrainY - 40}),
                 new Enemy({x: 1290, y: 350 - 40}),
                 // new Enemy({x: 1290 - 40, y: 350 - 40}),
@@ -331,7 +348,7 @@ window.addEventListener('load', function(){
 
                 new Enemy({x: 1790 - 40*2, y: 150 - 40}),
                 new Enemy({x: 1790 - 40*2, y: 150 - 40}),
-
+                
                 new Enemy({x: 8 * 200-6 + 4.5 * pitfallGap + 170, y: 350 - 40}),
                 new Enemy({x: 8 * 200-6 + 4.5 * pitfallGap + 170 - 40, y: 250 - 40}),
 
@@ -340,6 +357,7 @@ window.addEventListener('load', function(){
                 new Enemy({x: 3300 - 40*2, y: terrainY - 40})
                 
               ];
+    bunny = new Bunny({x:0, y:0});
     terrains = [new Terrain({x: -5, y: terrainY}),
                 new Terrain({x: 1 * 200-6, y: terrainY}),
                 new Terrain({x: 2 * 200-6, y: terrainY}),
@@ -377,6 +395,7 @@ window.addEventListener('load', function(){
     ctx.font = '25px myFontHack';
     ctx.fillStyle = 'black';
     let score = Math.floor(scrollScore / 10) + enemyScore;
+    if (score < 0) score = 0;
     ctx.fillText('Score: ' + score, 20, 50);
     if (gameOver) {
       ctx.font = '50px myFontHack';
@@ -405,10 +424,10 @@ window.addEventListener('load', function(){
     terrains.forEach(terrain => {
       terrain.draw();
     });
-    bunny.update(enemies);
     enemies.forEach(enemy => {
       enemy.update();
     });
+    bunny.update(enemies);
     
     bunny.speed.x = 0;
     if (keys.ArrowRight.pressed && bunny.pos.x < canvas.width / 2) {
@@ -419,6 +438,7 @@ window.addEventListener('load', function(){
       
         bunny.speed.x = -universalSpeed;
         scrollScore -= universalSpeed;
+        if (scrollScore < 0) scrollScore = 0;
 
       // enemy.speed.x = universalSpeed/10;
       
@@ -437,6 +457,8 @@ window.addEventListener('load', function(){
         })
       } else if (keys.ArrowLeft.pressed && scrollScore > 0){
           scrollScore -= universalSpeed;
+          if (scrollScore < 0) scrollScore = 0;
+
           enemies.forEach(enemy => {
             enemy.pos.x += universalSpeed;
           })
@@ -513,8 +535,27 @@ window.addEventListener('load', function(){
 
           // console.log(terrains[0].pos.x)
         }
+
+        // function displayStart(ctx){
+        //   ctx.font = '25px myFontHack';
+        //   ctx.fillStyle = 'black';
+      
+        //   if (start) {
+        //     ctx.font = '50px myFontHack';
+        //     ctx.textAlign = 'center';
+        //     ctx.fillStyle = 'green';
+        //     ctx.fillText('START!', canvas.width / 2, canvas.height / 2);
+        //   }
+        // };
+        
         start();
         animate();
+
+        // restartButtonListener();
+        // if (restart === true) {
+        //   start();
+        //   animate();
+        // }
 
   
 });

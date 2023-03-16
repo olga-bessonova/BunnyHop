@@ -33,7 +33,7 @@ li {
   border: 5px solid rgb(214, 115, 217);
 }
 
-#bunny, #ghost {
+#bunny, #bunnySpriteRunRight, #ghost {
   display: none;
 }
 

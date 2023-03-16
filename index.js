@@ -25,19 +25,77 @@ window.addEventListener('load', function(){
   };
 
 
+   /////////////////////////////////////////
+  ///////////////  Add keys  //////////////
+  /////////////////////////////////////////
+  window.addEventListener('keydown', (e) => {
+    // console.log(e);
+    switch (e.key) {
+      case 'ArrowRight':
+        keys.ArrowRight.pressed = true
+        bunny.changeSprite(bunnySpriteRunRight)
+        break
+      case 'ArrowLeft':
+        // debugger
+        keys.ArrowLeft.pressed = true
+        bunny.changeSprite(bunnySpriteRunLeft)
+        break 
+      case ' ':
+        bunny.changeSprite(bunnySpriteRunRight)
+        if (bunny.onGround()) bunny.speed.y = -18
+        else if (bunny.speed.y === 0) bunny.speed.y = -18
+        else bunny.speed.y = 0
+        break
+    }
+  })
+
+
+  window.addEventListener('keyup', (e) => {
+    switch (e.key) {
+      case 'ArrowRight':
+        keys.ArrowRight.pressed = false
+        bunny.changeSprite(bunnySpriteStandRight)
+        break
+      case 'ArrowLeft':
+        keys.ArrowLeft.pressed = false
+        bunny.changeSprite(bunnySpriteStandLeft)
+        break 
+    }
+  })
+
 /////////////////////////////////////////////
 ///////////////  Add sprites  //////////////
 /////////////////////////////////////////////
 
-  spriteBunnyDefault = {
+  bunnyDefault = {
     image: document.getElementById('bunny'),
     coord: [21, 27, 37, 43]
   }
-  spriteBunnySpriteRunRight = document.getElementById('bunnySpriteRunRight');
-  spriteBunnySpriteRunLeft = document.getElementById('bunnySpriteRunLeft');
+  bunnySpriteRunRight = {
+    image: document.getElementById('bunnySpriteRunRight'),
+    coord: [21, 27, 37, 43]
+  }
 
-  // const imgBunnyRunRight = [21, 27, 37, 43];
-  // const imgBunnyRunLeft =  [480 - 21, 27, 37, 43];
+  bunnySpriteRunLeft = {
+    image: document.getElementById('bunnySpriteRunLeft'),
+    coord: [21, 27, 37, 43]
+    // coord: [480 - 21 - 37, 27, 37, 43]
+  }
+
+  bunnySpriteStandRight = {
+    image: document.getElementById('bunnySpriteStandRight'),
+    coord: [21, 27, 37, 43]
+  }
+
+  bunnySpriteStandLeft = {
+    image: document.getElementById('bunnySpriteStandLeft'),
+    coord: [21, 27, 37, 43]
+  }
+
+  
+
+  
+
   class Bunny {
     constructor(pos){
       this.canvas = canvas;
@@ -53,26 +111,44 @@ window.addEventListener('load', function(){
         y: 0
       }
 
-      this.sprites = {
-        default: {
-          image: spriteBunnyDefault.image,
-          coord: spriteBunnyDefault.coord
-        },
-        run: {
-          right: spriteBunnySpriteRunRight,
-          left: spriteBunnySpriteRunLeft
-        }
+      // this.sprites = {
+      //   default: {
+      //     image: spriteBunnyDefault.image,
+      //     coord: spriteBunnyDefault.coord
+      //   },
+      //   run: {
+      //     right: {
+      //       image: spriteBunnySpriteRunRight.image,
+      //       coord: spriteBunnySpriteRunRight.coord
+      //     },
+      //     left: {
+      //       image: spriteBunnySpriteRunLeft.image,
+      //       coord: spriteBunnySpriteRunLeft.coord
+      //     }
+      //   },
+      //   idle: {
+      //     right: {
+      //       image: spriteBunnySpriteStandRight.image,
+      //       coord: spriteBunnySpriteStandRight.coord
+      //     }
+      //   }
 
-      }
-
-      this.currentSprite = this.sprites.default.image
-      this.coord = this.sprites.default.coord
+      // }
+      this.currentSpriteObject = bunnyDefault
+      this.currentSprite = this.currentSpriteObject.image
+      this.coord = this.currentSpriteObject.coord
       this.width = this.coord[2]//this.image.width / 6
       this.height = this.coord[3]//this.image.height
       // this.frameX = 0
       // this.frameY = 0 
       // sizeAdjustment is needed because bunny has too large padding to all boundaries
       // this.sizeAdjustment = 0
+    }
+
+    changeSprite(newSprite){
+      this.currentSpriteObject = newSprite
+      this.currentSprite = newSprite.image
+      this.coord = newSprite.coord
     }
 
     draw(){
@@ -146,7 +222,7 @@ window.addEventListener('load', function(){
           // console.log(this.pos);
           // console.log(enemy.pos);
           gameOver = true;
-          console.log(gameOver);
+          // console.log(gameOver);
         }
       });
 
@@ -497,7 +573,7 @@ window.addEventListener('load', function(){
           }
           displayInfo(ctx);
           pauseButtonListener();
-          console.log(pause);
+          // console.log(pause);
           if (!gameOver && !gameWin && !pause ) window.requestAnimationFrame(animate);
           // if (pause) window.requestAnimationFrame(animate);
 
@@ -519,50 +595,7 @@ window.addEventListener('load', function(){
         start();
         animate();
 
- /////////////////////////////////////////
-  ///////////////  Add keys  //////////////
-  /////////////////////////////////////////
-  window.addEventListener('keydown', (e) => {
-    // console.log(e);
-    switch (e.key) {
-      case 'ArrowRight':
-        keys.ArrowRight.pressed = true
-        bunny.currentSprite = bunny.sprites.default.image
-        break
-      case 'ArrowLeft':
-        keys.ArrowLeft.pressed = true
-        bunny.currentSprite = bunny.sprites.default.image
 
-        // bunny.currentSprite = bunny.sprites.run.left
-        break 
-      case ' ':
-        bunny.currentSprite = bunny.sprites.default.image
-
-        // bunny.currentSprite = bunny.sprites.default
-        if (bunny.onGround()) bunny.speed.y = -18
-        else if (bunny.speed.y === 0) bunny.speed.y = -18
-        else bunny.speed.y = 0
-        break
-    }
-  })
-
-
-  window.addEventListener('keyup', (e) => {
-    switch (e.key) {
-      case 'ArrowRight':
-        keys.ArrowRight.pressed = false
-        bunny.currentSprite = bunny.sprites.default.image
-
-        // bunny.currentSprite = bunny.sprites.default
-        break
-      case 'ArrowLeft':
-        keys.ArrowLeft.pressed = false
-        bunny.currentSprite = bunny.sprites.default.image
-
-        // bunny.currentSprite = bunny.sprites.default
-        break 
-    }
-  })
   
 });
 

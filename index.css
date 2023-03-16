@@ -33,7 +33,9 @@ li {
   border: 5px solid rgb(214, 115, 217);
 }
 
-#bunny, #bunnySpriteRunRight, #bunnySpriteRunLeft, #ghost {
+#bunny, #bunnySpriteRunRight, #bunnySpriteRunLeft, 
+  #bunnySpriteStandRight, #bunnySpriteStandLeft,
+  #ghost {
   display: none;
 }
 

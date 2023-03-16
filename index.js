@@ -14,6 +14,8 @@ window.addEventListener('load', function(){
   let pause = false;
   const gravity = 1;
   const posXStart = 20;
+  // determines which side the bunny faces
+  let faceSide = 'right'
 
   const keys = {
     ArrowRight: {
@@ -34,11 +36,13 @@ window.addEventListener('load', function(){
       case 'ArrowRight':
         keys.ArrowRight.pressed = true
         bunny.changeSprite(bunnySpriteRunRight)
+        faceSide = 'right'
         break
       case 'ArrowLeft':
         // debugger
         keys.ArrowLeft.pressed = true
         bunny.changeSprite(bunnySpriteRunLeft)
+        faceSide = 'left'
         break 
       case ' ':
         bunny.changeSprite(bunnySpriteRunRight)
@@ -55,10 +59,12 @@ window.addEventListener('load', function(){
       case 'ArrowRight':
         keys.ArrowRight.pressed = false
         bunny.changeSprite(bunnySpriteStandRight)
+        faceSide = 'right'
         break
       case 'ArrowLeft':
         keys.ArrowLeft.pressed = false
         bunny.changeSprite(bunnySpriteStandLeft)
+        faceSide = 'left'
         break 
     }
   })
@@ -91,6 +97,18 @@ window.addEventListener('load', function(){
     image: document.getElementById('bunnySpriteStandLeft'),
     coord: [21, 27, 37, 43]
   }
+
+  bunnySpriteDieRight = {
+    image: document.getElementById('bunnySpriteDieRight'),
+    coord: [1280 - 21 - 37, 27, 37, 43]
+  }
+
+  bunnySpriteDieLeft = {
+    image: document.getElementById('bunnySpriteDieLeft'),
+    coord: [21, 27, 37, 43]
+  }
+
+  
 
   
 
@@ -134,7 +152,7 @@ window.addEventListener('load', function(){
       //   }
 
       // }
-      this.currentSpriteObject = bunnyDefault
+      this.currentSpriteObject = bunnySpriteStandRight
       this.currentSprite = this.currentSpriteObject.image
       this.coord = this.currentSpriteObject.coord
       this.width = this.coord[2]//this.image.width / 6
@@ -219,10 +237,9 @@ window.addEventListener('load', function(){
                     enemy.pos.y + enemy.height === this.pos.y)
 
         ) {
-          // console.log(this.pos);
-          // console.log(enemy.pos);
+          if (faceSide === 'right') bunny.changeSprite(bunnySpriteDieRight)
+          else bunny.changeSprite(bunnySpriteDieLeft)
           gameOver = true;
-          // console.log(gameOver);
         }
       });
 

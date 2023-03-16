@@ -35,6 +35,7 @@ li {
 
 #bunny, #bunnySpriteRunRight, #bunnySpriteRunLeft, 
   #bunnySpriteStandRight, #bunnySpriteStandLeft,
+  #bunnySpriteDieRight, #bunnySpriteDieLeft,
   #ghost {
   display: none;
 }

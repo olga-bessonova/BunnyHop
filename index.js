@@ -12,20 +12,9 @@ window.addEventListener('load', function(){
   let gameOver = false;
   let gameWin = false;
   let pause = false;
-  let restart = false;
+  const gravity = 1;
+  const posXStart = 20;
 
-  
-
-
-  function createImage(imageSrc){
-    const image = new Image();
-    image.src = imageSrc
-    return image; 
-  }
-
-  /////////////////////////////////////////
-  ///////////////  Add keys  //////////////
-  /////////////////////////////////////////
   const keys = {
     ArrowRight: {
       pressed: false
@@ -35,42 +24,20 @@ window.addEventListener('load', function(){
     }
   };
 
-  window.addEventListener('keydown', (e) => {
-    // console.log(e);
-    switch (e.key) {
-      case 'ArrowRight':
-        keys.ArrowRight.pressed = true
-        break
-      case 'ArrowLeft':
-        keys.ArrowLeft.pressed = true
-        break 
-      case ' ':
-        if (bunny.onGround()) bunny.speed.y = -18
-        else if (bunny.speed.y === 0) bunny.speed.y = -18
-        else bunny.speed.y = 0
-        break
-    }
-  })
 
+/////////////////////////////////////////////
+///////////////  Add sprites  //////////////
+/////////////////////////////////////////////
 
-  window.addEventListener('keyup', (e) => {
-    switch (e.key) {
-      case 'ArrowRight':
-        keys.ArrowRight.pressed = false
-        break
-      case 'ArrowLeft':
-        keys.ArrowLeft.pressed = false
-        break 
-    }
-  })
+  spriteBunnyDefault = {
+    image: document.getElementById('bunny'),
+    coord: [21, 27, 37, 43]
+  }
+  spriteBunnySpriteRunRight = document.getElementById('bunnySpriteRunRight');
+  spriteBunnySpriteRunLeft = document.getElementById('bunnySpriteRunLeft');
 
-
-
-
-  const gravity = 1;
-  const posXStart = 20;
-
-  const imgBunnyRun = [21, 27, 37, 43];
+  // const imgBunnyRunRight = [21, 27, 37, 43];
+  // const imgBunnyRunLeft =  [480 - 21, 27, 37, 43];
   class Bunny {
     constructor(pos){
       this.canvas = canvas;
@@ -85,13 +52,27 @@ window.addEventListener('load', function(){
         x: 0,
         y: 0
       }
-      this.image = document.getElementById('bunny')
-      this.width = imgBunnyRun[2]//this.image.width / 6
-      this.height = imgBunnyRun[3]//this.image.height
-      this.frameX = 0
-      this.frameY = 0 
+
+      this.sprites = {
+        default: {
+          image: spriteBunnyDefault.image,
+          coord: spriteBunnyDefault.coord
+        },
+        run: {
+          right: spriteBunnySpriteRunRight,
+          left: spriteBunnySpriteRunLeft
+        }
+
+      }
+
+      this.currentSprite = this.sprites.default.image
+      this.coord = this.sprites.default.coord
+      this.width = this.coord[2]//this.image.width / 6
+      this.height = this.coord[3]//this.image.height
+      // this.frameX = 0
+      // this.frameY = 0 
       // sizeAdjustment is needed because bunny has too large padding to all boundaries
-      this.sizeAdjustment = 0
+      // this.sizeAdjustment = 0
     }
 
     draw(){
@@ -106,9 +87,9 @@ window.addEventListener('load', function(){
       //               this.frameX * this.width, this.frameY * this.height,
       //               this.width, this.height,
       //               this.pos.x, this.pos.y, this.width, this.height);
-      ctx.drawImage(this.image, 
-        imgBunnyRun[0], imgBunnyRun[1],
-        imgBunnyRun[2], imgBunnyRun[3],
+      ctx.drawImage(this.currentSprite, 
+                    this.coord[0], this.coord[1],
+                    this.coord[2], this.coord[3],
                     this.pos.x, this.pos.y, this.width, this.height);
                      
 
@@ -293,21 +274,13 @@ window.addEventListener('load', function(){
     }
   }
 
-  // function restartButtonListener() {
-  //   let restartButton = document.getElementById("restart-button") 
-  //   restartButton.addEventListener("click", buttonEventRestart)
-    
-  //   function buttonEventRestart(e) {
-  //     restart = true
-  //   }
-  // }
+
 
 
   let restartButton = document.getElementById("restart-button");
   restartButton.addEventListener('click', () => {
     // window.location.reload(false);
     start();
-    // animate();
   })
   
 
@@ -320,14 +293,10 @@ window.addEventListener('load', function(){
 ///////////////////////////////////////////////////////////////////////////////////////////////////
   let scrollScore = 0;
   let enemyScore = 0;
-  // let bunny = new Bunny({x:0, y:0});
-  // let enemy = new Enemy();
   let bunny = new Bunny();
   let enemies = [];
   let terrains = [];
-                  //  [new Terrain({x: 60, y: 200, imageSrc: './assets/rectangular.png'}),
-                    // new Terrain({x: 200, y: 400, imageSrc: './assets/rectangular.png'})];
-
+ 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////  Start function - reassign instances of classes and some variables  //////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -384,11 +353,9 @@ window.addEventListener('load', function(){
                 new Terrain({x: 15 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
                 new Terrain({x: 16 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
                 new Terrain({x: 17 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
-                // new Terrain({x: 3*200-6 + 100, y: terrainY}),
-                // new Terrain({x: 3*200-6 + 100, y: terrainY}),
+                new Terrain({x: 3*200-6 + 100, y: terrainY}),
               ];
-              //  [new Terrain({x: 60, y: 200, imageSrc: './assets/rectangular.png'}),
-                // new Terrain({x: 200, y: 400, imageSrc: './assets/rectangular.png'})];
+              //  new Terrain({x: 200, y: 400, imageSrc: './assets/rectangular.png'})];
   };
 
   function displayInfo(ctx){
@@ -409,6 +376,7 @@ window.addEventListener('load', function(){
       ctx.textAlign = 'center';
       ctx.fillStyle = 'green';
       ctx.fillText('YOU WIN!', canvas.width / 2, canvas.height / 2);
+      // gameWin = false;
     }
   };
 
@@ -551,12 +519,50 @@ window.addEventListener('load', function(){
         start();
         animate();
 
-        // restartButtonListener();
-        // if (restart === true) {
-        //   start();
-        //   animate();
-        // }
+ /////////////////////////////////////////
+  ///////////////  Add keys  //////////////
+  /////////////////////////////////////////
+  window.addEventListener('keydown', (e) => {
+    // console.log(e);
+    switch (e.key) {
+      case 'ArrowRight':
+        keys.ArrowRight.pressed = true
+        bunny.currentSprite = bunny.sprites.default.image
+        break
+      case 'ArrowLeft':
+        keys.ArrowLeft.pressed = true
+        bunny.currentSprite = bunny.sprites.default.image
 
+        // bunny.currentSprite = bunny.sprites.run.left
+        break 
+      case ' ':
+        bunny.currentSprite = bunny.sprites.default.image
+
+        // bunny.currentSprite = bunny.sprites.default
+        if (bunny.onGround()) bunny.speed.y = -18
+        else if (bunny.speed.y === 0) bunny.speed.y = -18
+        else bunny.speed.y = 0
+        break
+    }
+  })
+
+
+  window.addEventListener('keyup', (e) => {
+    switch (e.key) {
+      case 'ArrowRight':
+        keys.ArrowRight.pressed = false
+        bunny.currentSprite = bunny.sprites.default.image
+
+        // bunny.currentSprite = bunny.sprites.default
+        break
+      case 'ArrowLeft':
+        keys.ArrowLeft.pressed = false
+        bunny.currentSprite = bunny.sprites.default.image
+
+        // bunny.currentSprite = bunny.sprites.default
+        break 
+    }
+  })
   
 });
 

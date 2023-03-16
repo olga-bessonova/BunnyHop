@@ -306,6 +306,9 @@ window.addEventListener('load', function(){
 
     }
     update(){
+      this.frameX++;
+      if (this.frameX >= 6) this.frameX = 0
+      
       this.draw();
       this.pos.x -= this.speed.x;
       this.pos.y += this.speed.y;

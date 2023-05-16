@@ -1,5 +1,3 @@
-// import terrain from './assets/rectangular.png'
-
 window.addEventListener('load', function(){
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
@@ -33,7 +31,6 @@ window.addEventListener('load', function(){
   ///////////////  Add keys  //////////////
   /////////////////////////////////////////
   window.addEventListener('keydown', (e) => {
-    // console.log(e);
     switch (e.key) {
       case 'ArrowRight':
         keys.ArrowRight.pressed = true
@@ -41,7 +38,6 @@ window.addEventListener('load', function(){
         faceSide = 'right'
         break
       case 'ArrowLeft':
-        // debugger
         keys.ArrowLeft.pressed = true
         bunny.changeSprite(bunnySpriteRunLeft)
         faceSide = 'left'
@@ -128,7 +124,7 @@ window.addEventListener('load', function(){
 
       this.pos = {
         x: posXStart,
-        y: 0 //canvas.height - this.height
+        y: 0 
       }
 
       this.speed = {
@@ -162,12 +158,8 @@ window.addEventListener('load', function(){
       this.currentSpriteObject = bunnySpriteStandRight
       this.currentSprite = this.currentSpriteObject.image
       this.coord = this.currentSpriteObject.coord
-      this.width = this.coord[2]//this.image.width / 6
-      this.height = this.coord[3]//this.image.height
-      // this.frameX = 0
-      // this.frameY = 0 
-      // sizeAdjustment is needed because bunny has too large padding to all boundaries
-      // this.sizeAdjustment = 0
+      this.width = this.coord[2]
+      this.height = this.coord[3]
     }
 
     changeSprite(newSprite){
@@ -177,17 +169,6 @@ window.addEventListener('load', function(){
     }
 
     draw(){
-      // ctx.strokeStyle = 'black';
-      // ctx.strokeRect(this.pos.x, this.pos.y, this.width, this.height);
-      // ctx.beginPath();
-      // ctx.arc(this.pos.x + this.width/2, this.pos.y + this.height/2, this.width/2 - this.sizeAdjustment, 0, Math.PI * 2);
-      // ctx.stroke();
-      // ctx.fillStyle = 'red';
-      // ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
-      // ctx.drawImage(this.image, 
-      //               this.frameX * this.width, this.frameY * this.height,
-      //               this.width, this.height,
-      //               this.pos.x, this.pos.y, this.width, this.height);
       ctx.drawImage(this.currentSprite, 
                     this.coord[0], this.coord[1],
                     this.coord[2], this.coord[3],
@@ -197,34 +178,14 @@ window.addEventListener('load', function(){
     }
 
     update(enemies){
-      // collision detection
-      // console.log(enemies);
       enemies.forEach((enemy, index) => {
-        // const dx = enemy.pos.x - this.pos.x - this.sizeAdjustment;
-        // const dy = enemy.pos.y - this.pos.y - this.sizeAdjustment;
-        // const dx = enemy.pos.x - this.pos.x - this.sizeAdjustment;
-        // const dy = enemy.pos.y - this.pos.y - this.sizeAdjustment;
-        // const distance = Math.sqrt(dx * dx + dy * dy);
-        // console.log(distance);
-        // console.log(enemy.pos.y - (this.pos.y + this.height));
-
-        // bunny jumps on top of enemy. Top Collision
         if (enemy.pos.x                <= this.pos.x + this.width &&
             enemy.pos.x + enemy.width  >= this.pos.x              &&
             enemy.pos.y >= this.pos.y + this.height &&
             enemy.pos.y <= this.pos.y + this.height + this.speed.y
-
-            // enemy.pos.y               >= this.pos.y + this.height - this.sizeAdjustment &&
-            // enemy.pos.y - (this.pos.y + this.height) <= 1
-
             ){
-              console.log('enemy defeated');
               this.speed.y = -10;
-              // bunny jumped on enemy and enemy needs to be removed
               remove(enemy, index);
-              // console.log(enemies);
-
-        // } else if (distance < enemy.width / 2 + this.width / 2) {
         } else if ( 
                     // enemy touches bunny on the left
                    (enemy.pos.x + enemy.width  >= this.pos.x  &&
@@ -253,18 +214,12 @@ window.addEventListener('load', function(){
       this.draw();
       this.pos.x += this.speed.x;
       if (this.pos.x < posXStart) this.pos.x = posXStart;
-      // else if (this.pos.x + this.width >= canvas.width) this.pos.x = canvas.width - this.width;
 
-      //console.log(this.onGround());
       this.pos.y += this.speed.y
-      // if (!this.onGround()) 
+
       if (this.pos.y + this.height + this.speed.y < canvas.height && !this.onGround()){
         this.speed.y += gravity;
       } 
-      // remove else for a pitfall logic
-      //else {
-        //this.speed.y = 0;
-      //}
     }
 
     // check if bunny is on the terrain
@@ -284,7 +239,7 @@ window.addEventListener('load', function(){
 
       this.pos = {
         x: x,
-        y: y//terrainY - this.height// - this.speed.y -1
+        y: y
       }
       this.image = document.getElementById('ghost')
       this.width = this.image.width / 6
@@ -294,13 +249,6 @@ window.addEventListener('load', function(){
 
     }
     draw(){
-      // ctx.strokeStyle = 'black';
-      // ctx.strokeRect(this.pos.x, this.pos.y, this.width, this.height);
-      // ctx.beginPath();
-      // ctx.arc(this.pos.x + this.width/2, this.pos.y + this.height/2, this.width/2, 0, Math.PI * 2);
-      // ctx.stroke();
-      // ctx.fillStyle = 'grey';
-      // ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
       ctx.drawImage(this.image, 
         this.frameX * this.width, this.frameY * this.height,
         this.width, this.height,
@@ -326,33 +274,18 @@ window.addEventListener('load', function(){
 
   };
 
-  // function remove(enemy){
-  //   const index = enemies.indexOf(el => {
-  //     el.pos.x === enemy.pos.x &&
-  //     el.pos.y === enemy.pos.y
-  //   })
-  //   enemies.splice(index,1);
-  //   enemyScore += 100;
-  //   // return enemies;
-  // }
-
   function remove(enemy, index){
     enemies.splice(index,1);
     enemyScore += 100;
-    // return enemies;
   }
 
   class Terrain {
     constructor({x,y}) {
-      // constructor({x,y, imageSrc}) {
       this.pos = {
         x: x,
         y: y
       }
       
-      // this.image = imageSrc
-      // this.width = this.image.width
-      // this.height = this.image.height
       this.width = 200
       this.height = 30
     }
@@ -360,7 +293,6 @@ window.addEventListener('load', function(){
     draw() {
       ctx.fillStyle = 'black'
       ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height)
-      // ctx.drawImage(this.image, this.pos.x, this.pos.y);
     } 
   }
 
@@ -384,14 +316,9 @@ window.addEventListener('load', function(){
 
   let restartButton = document.getElementById("restart-button");
   restartButton.addEventListener('click', () => {
-    // window.location.reload(false);
     start();
   })
   
-
-    // function removeListener() {
-    //     pauseButton.removeEventListener("click", buttonEvent);
-    // }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////  Initialaze instances of classes and some variables  //////////////
@@ -414,7 +341,6 @@ window.addEventListener('load', function(){
       new Enemy({x: 450, y: 100}),
                 new Enemy({x: 550, y: terrainY - 40}),
                 new Enemy({x: 1290, y: 350 - 40}),
-                // new Enemy({x: 1290 - 40, y: 350 - 40}),
                 new Enemy({x: 1290 - 40, y: terrainY - 40}),
                 new Enemy({x: 1790, y: 150 - 40}),
                 new Enemy({x: 1790 - 40, y: 150 - 40}),
@@ -460,7 +386,6 @@ window.addEventListener('load', function(){
                 new Terrain({x: 17 * 200-6 + 4.5 * pitfallGap, y: terrainY}),
                 new Terrain({x: 3*200-6 + 100, y: terrainY}),
               ];
-              //  new Terrain({x: 200, y: 400, imageSrc: './assets/rectangular.png'})];
   };
 
   function displayInfo(ctx){
@@ -481,7 +406,6 @@ window.addEventListener('load', function(){
       ctx.textAlign = 'center';
       ctx.fillStyle = 'green';
       ctx.fillText('YOU WIN!', canvas.width / 2, canvas.height / 2);
-      // gameWin = false;
     }
   };
 
@@ -506,20 +430,15 @@ window.addEventListener('load', function(){
     if (keys.ArrowRight.pressed && bunny.pos.x < canvas.width / 2) {
       bunny.speed.x = universalSpeed;
       scrollScore += universalSpeed;
-      // enemy.speed.x = universalSpeed/10;
     } else if (keys.ArrowLeft.pressed && bunny.pos.x < canvas.width / 2 ){
       
         bunny.speed.x = -universalSpeed;
         scrollScore -= universalSpeed;
-        if (scrollScore < 0) scrollScore = 0;
-
-      // enemy.speed.x = universalSpeed/10;
-      
+        if (scrollScore < 0) scrollScore = 0;      
     } else {
       bunny.speed.x = 0
       
       if (keys.ArrowRight.pressed) {
-        // scrollScore += bunny.pos.x;
         scrollScore += universalSpeed;
         enemies.forEach(enemy => {
           enemy.pos.x -= universalSpeed;
@@ -539,14 +458,8 @@ window.addEventListener('load', function(){
           terrains.forEach(terrain => {
             terrain.pos.x += universalSpeed;
           })
-      // } else if (bunny.pos.x <= 10 && keys.ArrowLeft.pressed){
-      //   // scrollScore -= universalSpeed;
-      //   terrains.forEach(terrain => {
-      //     terrain.pos.x += 0;
-      //   })
       }
     }
-    // console.log(scrollScore);
     
     terrains.forEach(terrain => {
       // top collision with a terrain or a platform
@@ -562,7 +475,7 @@ window.addEventListener('load', function(){
             bunny.pos.x + bunny.width                  >= terrain.pos.x &&
             bunny.pos.x                                <= terrain.pos.x + terrain.width )) {
               
-              bunny.speed.y = 0
+            bunny.speed.y = 0
             }
           })
 
@@ -589,8 +502,6 @@ window.addEventListener('load', function(){
             }
             
           })
-          // console.log(scrollScore);
-          // console.log(bunny.pos.x);
           
           if (scrollScore > 3000) {
             console.log('Win!') ;
@@ -604,23 +515,7 @@ window.addEventListener('load', function(){
           // pauseButtonListener();
           console.log(pause);
           if (!gameOver && !gameWin && !pause ) window.requestAnimationFrame(animate);
-          // if (pause) window.requestAnimationFrame(animate);
-
-          // console.log(terrains[0].pos.x)
         }
-
-        // function displayStart(ctx){
-        //   ctx.font = '25px myFontHack';
-        //   ctx.fillStyle = 'black';
-      
-        //   if (start) {
-        //     ctx.font = '50px myFontHack';
-        //     ctx.textAlign = 'center';
-        //     ctx.fillStyle = 'green';
-        //     ctx.fillText('START!', canvas.width / 2, canvas.height / 2);
-        //   }
-        // };
-        
         start();
         animate();
 

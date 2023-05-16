@@ -14,6 +14,8 @@ window.addEventListener('load', function(){
   let pause = false;
   const gravity = 1;
   const posXStart = 20;
+
+  pauseButtonListener();
   // determines which side the bunny faces
   let faceSide = 'right'
 
@@ -368,11 +370,13 @@ window.addEventListener('load', function(){
     pauseButton.addEventListener("click", buttonEvent)
     
     function buttonEvent(e) {
+      console.log(pause)
       if (pause === true) {
         pause = false;
-        // animate();
+        animate();
       } else if (pause === false) pause = true;
     }
+    
   }
 
 
@@ -597,8 +601,8 @@ window.addEventListener('load', function(){
             start();
           }
           displayInfo(ctx);
-          pauseButtonListener();
-          // console.log(pause);
+          // pauseButtonListener();
+          console.log(pause);
           if (!gameOver && !gameWin && !pause ) window.requestAnimationFrame(animate);
           // if (pause) window.requestAnimationFrame(animate);
 

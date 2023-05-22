@@ -21,15 +21,6 @@ li {
 #canvas {
   padding: 0;
   margin: auto;
-  /* display: block; */
-  
-  /* position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0; */
-  /* background: rgb(243, 200, 207); */
-  /* transform: translate(-50%,-50%); */
   border: 5px solid rgb(214, 115, 217);
 }
 
@@ -40,115 +31,41 @@ li {
   display: none;
 }
 
-
-/* #main-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 1200px;
-  height: 700px;
-} */
-
-
 h1 {
   font-family: "myFontHack", "myFontSnes", 'Courier New';
-  font-size: 60px;
+  font-size: 35px;
   width: 100%;
   text-align: center;
-  /* margin: 10px; */
 }
 
 #instructions {
   font-family: 'Courier New';
   font-size: 20px;
-  /* position: absolute; */
-  /* top: 550px; */
   text-align: center;
   margin-top: 40px;
 }
 
-#links-and-canvas{
-  width: 1034px;
-  margin: 0 auto;
-  /* display: flex; */
-  /* justify-content: flex-end; */
-}
-/* #control {
-    font-family: 'Courier New';
-    font-size: 20px;
-    cursor: pointer;
-} */
-
-/* #play-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 90px;
-    transform: translate(-50%, -50%);
-    z-index: 5;
-    font-family: 'Courier New';
-    text-align: center;
-    padding: 10px;
+#links_and_canvas {
+  /* width: 1034px; */
+  /* margin: 0 auto; */
 }
 
-#pause-button {
-    position: absolute;
-    left: 400px;
-    top: -15px;
-    font-size: medium;
-    padding-bottom: 10px;
-} */
-
-/* #restart-button {
-    position: absolute;
-    top: 10px;
-    left: 400px;
-    font-size: medium;
-} */
-
-
-
-
-
-
-#navigation-bar {
-  /* width: 1240px; */
-  /* position: absolute; */
-  float: right;
-  list-style: none;
-  /* display: block; */
-  margin: 0;
-  padding: 0;
-  text-align: center;
-  /* top: -2%; */
-  /* right: 100px; */
-  /* bottom: ; */
-}
-
-#navigation-bar ul {
-  text-align: center;
-  /* display: flex; */
+#navigation_bar {
   /* float: right; */
-  /* margin-right: 100px; */
-  /* margin-top: 120px; */
-}
-#navigation-bar li {
-  display: inline-block;
-  /* float: left; */
-  margin-right: 10px;
+  /* list-style: none; */
+  /* margin: 0; */
+  /* padding: 0; */
+  /* text-align: center; */
 }
 
-/* #navigation-bar ul {
-  padding: 10px;
-} */
-
-
-
+.navigation_bar_ul {
+  text-align: center;
+  display: inline;
+}
 /* #navigation-bar li {
-  list-style-type: none
+  display: inline-block;
+  margin-right: 10px;
 } */
-
 
 a {
   color: inherit;

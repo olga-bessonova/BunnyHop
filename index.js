@@ -2,8 +2,8 @@ window.addEventListener('load', function(){
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
 
-  canvas.width = 1024;
-  canvas.height = 500;
+  canvas.width = 800;
+  canvas.height = 400;
   const universalSpeed = 5;
   const pitfallGap = 100;
   const terrainY = canvas.height - 28;

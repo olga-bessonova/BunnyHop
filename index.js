@@ -2,8 +2,8 @@ window.addEventListener('load', function(){
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
 
-  canvas.width = 800;
-  canvas.height = 400;
+  canvas.width = 1024;
+  canvas.height = 500;
   const universalSpeed = 5;
   const pitfallGap = 100;
   const terrainY = canvas.height - 28;
@@ -317,6 +317,7 @@ window.addEventListener('load', function(){
   let restartButton = document.getElementById("restart-button");
   restartButton.addEventListener('click', () => {
     start();
+    animate();
   })
   
 

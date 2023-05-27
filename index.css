@@ -18,9 +18,15 @@ li {
   text-align: center;
 }
 
+.canvas_container {
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
 #canvas {
   padding: 0;
-  margin: auto;
+  /* margin: auto; */
   border: 5px solid rgb(214, 115, 217);
 }
 
@@ -55,17 +61,22 @@ h1 {
   /* list-style: none; */
   /* margin: 0; */
   /* padding: 0; */
-  /* text-align: center; */
+  text-align: right;
+  position: relative;
 }
 
 .navigation_bar_ul {
   text-align: center;
   display: inline;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
 }
-/* #navigation-bar li {
-  display: inline-block;
+
+.navigation_bar_ul li {
+  display: inline;
   margin-right: 10px;
-} */
+}
 
 a {
   color: inherit;

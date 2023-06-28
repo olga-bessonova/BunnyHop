@@ -505,16 +505,16 @@ window.addEventListener('load', function(){
           })
           
           if (scrollScore > 3000) {
-            console.log('Win!') ;
+            // console.log('Win!') ;
             gameWin = true;
           }
           if (bunny.pos.y > canvas.height) {
-            console.log('Lose!');
+            // console.log('Lose!');
             start();
           }
           displayInfo(ctx);
           // pauseButtonListener();
-          console.log(pause);
+          // console.log(pause);
           if (!gameOver && !gameWin && !pause ) window.requestAnimationFrame(animate);
         }
         start();

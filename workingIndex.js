@@ -16,7 +16,6 @@ window.addEventListener('load', function(){
   pauseButtonListener();
   // determines which side the bunny faces
   let faceSide = 'right'
-  let spacePressed = false;
 
   const keys = {
     ArrowRight: {
@@ -44,30 +43,14 @@ window.addEventListener('load', function(){
         faceSide = 'left'
         break 
       case ' ':
-        // if (bunny.onGround()) {
-        //   if (faceSide === 'right') bunny.changeSprite(bunnySpriteRunRight);
-        //   else bunny.changeSprite(bunnySpriteRunLeft);
-        //   bunny.speed.y = -18;
-        // }
-
-        // if (bunny.onGround() && !spacePressed) {
-        //   spacePressed = true;
-        //   if (faceSide === 'right') bunny.changeSprite(bunnySpriteRunRight);
-        //   else bunny.changeSprite(bunnySpriteRunLeft);
-        //   bunny.speed.y = -18;
-        // }
-
-        if (!spacePressed) { // Check if spacebar is not already pressed
-          spacePressed = true;
-          if (faceSide === 'right') bunny.changeSprite(bunnySpriteRunRight);
-          else bunny.changeSprite(bunnySpriteRunLeft);
-          if (bunny.onGround()) bunny.speed.y = -18;
-          else if (bunny.speed.y === 0) bunny.speed.y = -18;
-          else bunny.speed.y = 0;
-        }
-        break;
-      }
-    });
+        if (faceSide === 'right') bunny.changeSprite(bunnySpriteRunRight)
+        else bunny.changeSprite(bunnySpriteRunLeft)
+        if (bunny.onGround()) bunny.speed.y = -18
+        // else if (bunny.speed.y === 0) bunny.speed.y = -18
+        else bunny.speed.y = 0
+        break
+    }
+  })
 
 
   window.addEventListener('keyup', (e) => {
@@ -83,10 +66,9 @@ window.addEventListener('load', function(){
         faceSide = 'left'
         break 
       case ' ':
-        spacePressed = false; 
-        if (faceSide === 'right') bunny.changeSprite(bunnySpriteStandRight);
-        else bunny.changeSprite(bunnySpriteStandLeft);
-        break;
+        if (faceSide === 'right') bunny.changeSprite(bunnySpriteStandRight)
+        else bunny.changeSprite(bunnySpriteStandLeft)
+        break 
     }
   })
 

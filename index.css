@@ -46,19 +46,16 @@ h1 {
 }
 
 #container { 
-  /* width: 1034px; */
-  /* margin: 0 auto; */
-  /* width: 70%; */
   width: 300px;
-  margin: 0 auto;
   display: grid;
   grid-template-rows: auto auto auto auto; /* 4 rows */
   grid-template-columns: 1fr;
   grid-gap:10px;
-  height: calc(100vh - 10px);
-  height: 30vh; 
-  height: 200px; 
+  /* height: calc(100vh - 10px); */
+  /* height: 100vh;  */
   justify-content: center;
+  /* max-width: 100%; Set the maximum width to 100% of the available space */
+  margin: 0 auto; /* Center the div horizontally */
 }
 
 #navigation_bar {

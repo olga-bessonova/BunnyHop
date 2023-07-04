@@ -334,8 +334,13 @@ window.addEventListener('load', function(){
 
   let restartButton = document.getElementById("restart-button");
   restartButton.addEventListener('click', () => {
-    start();
-    // animate();
+    if (gameOver) {
+      // window.requestAnimationFrame(animate)
+      start();
+      animate();
+    } else{
+      start();
+    }
   })
   
 

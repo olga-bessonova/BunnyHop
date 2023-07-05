@@ -532,7 +532,7 @@ window.addEventListener('load', function(){
             gameWin = true;
           }
           if (bunny.pos.y > canvas.height) {
-            // console.log('Lose!');
+            console.log('Lose!');
             start();
           }
           displayInfo(ctx);

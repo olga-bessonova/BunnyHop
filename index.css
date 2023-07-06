@@ -38,15 +38,8 @@ h1 {
   text-align: center;
 }
 
-#instructions {
-  font-family: 'Courier New';
-  font-size: 20px;
-  text-align: center;
-  margin-top: 40px;
-}
-
 #container { 
-  width: 300px;
+  width: 400px;
   display: grid;
   grid-template-rows: auto auto auto auto; /* 4 rows */
   grid-template-columns: 1fr;
@@ -65,19 +58,11 @@ h1 {
   /* padding: 0; */
   text-align: right;
   /* position: relative; */
+  position: relative;
+  right: 160px;
 }
 
-.canvas_container {
-  text-align: center;
-  align-items: center;
-  /* justify-content: center;
-  display: flex;
-  justify-content: flex-end; 
-  align-items: center; 
-  height: 50%;
-  background-color: lightgray; 
-  border: 1px solid gray;  */
-}
+
 
 .navigation_bar_ul {
   text-align: center;
@@ -98,6 +83,34 @@ a {
 
 a:link { 
   text-decoration: none; 
+}
+
+#canvas_container {
+  /* text-align: center; */
+  /* align-items: center; */
+  display: flex;
+  position: relative;
+  right: -70px;
+  /* justify-content: center;
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center; 
+  height: 50%;
+  background-color: lightgray; 
+  border: 1px solid gray;  */
+}
+
+#instructions {
+  font-family: 'Courier New';
+  font-size: 20px;
+  text-align: center;
+  margin-top: 40px;
+  margin-left: 10px;
+  width:150px;
+}
+
+#instructions-paragraph {
+  text-align: left;
 }
 
 

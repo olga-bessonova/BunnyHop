@@ -8,9 +8,9 @@ A side-scrolling game where the main character bunny needs to get from start to 
 
 There is a scoring system. The game ends successfully if the map ends and the bunny reaches the finish. 
 
-<img src="https://i.postimg.cc/65Mr8BDy/begin-dead.gif"  width="40%">
-<img src="https://i.postimg.cc/kXJNM2Y0/begin-fall2.gif"  width="40%">
-<img src="https://i.postimg.cc/rwzSWvkg/win.gif"  width="40%">
+<img src="https://i.postimg.cc/65Mr8BDy/begin-dead.gif">
+<img src="https://i.postimg.cc/kXJNM2Y0/begin-fall2.gif">
+<img src="https://i.postimg.cc/rwzSWvkg/win.gif">
 
 
 # Functionality

@@ -39,7 +39,51 @@ Bonus features (to be implemented):
 Bonus feature (to be implemented):
 * Google Fire
 
+# Code
+Here is an implementation of a class Enemy:
+```javascript
+  class Enemy {
+    constructor({x, y}){           
+      
+      this.speed = {
+        x: 0.5,
+        y: 0
+      }
 
+      this.pos = {
+        x: x,
+        y: y
+      }
+      this.image = document.getElementById('ghost')
+      this.width = this.image.width / 6
+      this.height = this.image.height
+      this.frameX = 0
+      this.frameY = 0 
+    }
+
+    draw(){
+      ctx.drawImage(this.image, 
+        this.frameX * this.width, this.frameY * this.height,
+        this.width, this.height,
+        this.pos.x, this.pos.y, this.width, this.height);
+    }
+
+    update(){
+      this.frameX++;
+      if (this.frameX >= 6) this.frameX = 0      
+      this.draw();
+      this.pos.x -= this.speed.x;
+      this.pos.y += this.speed.y;
+      if (this.pos.y + this.height + this.speed.y < canvas.height && !this.onGround()){
+        this.speed.y += gravity;
+      }
+    }
+
+    onGround(){
+      return this.pos.y >= canvas.height - this.height;
+    }
+  };
+```
 
 # Timeline
 ## Day 1

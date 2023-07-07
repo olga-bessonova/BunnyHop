@@ -334,7 +334,7 @@ window.addEventListener('load', function(){
 
   let restartButton = document.getElementById("restart-button");
   restartButton.addEventListener('click', () => {
-    if (gameOver) {
+    if (gameOver || gameWin) {
       location.reload();
     } else{
       start();

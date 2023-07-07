@@ -8,10 +8,10 @@ A side-scrolling game where the main character bunny needs to get from start to 
 
 There is a scoring system. The game ends successfully if the map ends and the bunny reaches the finish. 
 
-<img src="https://i.postimg.cc/9fpQJfCh/begin-fall.gif"  width="40%">
-<img src="https://i.postimg.cc/T3fTyRp8/game-start.jpg"  width="40%">
-<img src="https://i.postimg.cc/1zzB3qS8/game-over.jpg"  width="40%">
-<img src="https://i.postimg.cc/fR87pRdD/game-win.jpg"  width="40%">
+<img src="https://i.postimg.cc/65Mr8BDy/begin-dead.gif"  width="40%">
+<img src="https://i.postimg.cc/kXJNM2Y0/begin-fall2.gif"  width="40%">
+<img src="https://i.postimg.cc/rwzSWvkg/win.gif"  width="40%">
+
 
 # Functionality
 * Use left, right arrows to move left and right. Use space to jump. 

@@ -20,7 +20,6 @@ li {
 
 #canvas {
   padding: 0;
-  /* margin: auto; */
   border: 5px solid rgb(214, 115, 217);
 }
 
@@ -29,6 +28,14 @@ li {
   #bunnySpriteDieRight, #bunnySpriteDieLeft,
   #ghost {
   display: none;
+}
+
+a {
+  color: inherit;
+}
+
+a:link { 
+  text-decoration: none; 
 }
 
 h1 {
@@ -41,28 +48,22 @@ h1 {
 #container { 
   width: 400px;
   display: grid;
-  grid-template-rows: auto auto auto auto; /* 4 rows */
+  grid-template-rows: auto auto auto; 
   grid-template-columns: 1fr;
   grid-gap:10px;
-  /* height: calc(100vh - 10px); */
-  /* height: 100vh;  */
   justify-content: center;
-  /* max-width: 100%; Set the maximum width to 100% of the available space */
-  margin: 0 auto; /* Center the div horizontally */
+  margin: 0 auto; 
+}
+
+.container_header {
+  margin-bottom: -25px;
 }
 
 #navigation_bar {
-  /* float: right; */
-  /* list-style: none; */
-  /* margin: 0; */
-  /* padding: 0; */
   text-align: right;
-  /* position: relative; */
   position: relative;
-  right: 160px;
+  right: 181px;
 }
-
-
 
 .navigation_bar_ul {
   text-align: center;
@@ -77,27 +78,51 @@ h1 {
   margin-right: 10px;
 }
 
-a {
-  color: inherit;
+
+[data-title]:hover:after {
+  opacity: 1;
+  transition: all 0.2s ease-in-out;
+  visibility: visible;
+  font-size: 18px;
+  font-weight: 700;
+  font-style: bold;
 }
 
-a:link { 
-  text-decoration: none; 
+[data-title]:after {
+  content: attr(data-title);
+  position: absolute;
+  bottom: -50px;
+  left: -70px;
+  padding: 6px;
+  color: black;
+  white-space: nowrap; 
+  -moz-border-radius: 8px; 
+  -webkit-border-radius: 8px;  
+  border-radius: 8px;  
+  -moz-box-shadow: 0px 0px 4px #222;  
+  -webkit-box-shadow: 0px 0px 4px #222;  
+  box-shadow: 0px 0px 4px #222;  
+  opacity: 0;
+  z-index: 99999;
+  visibility: hidden;
+  font-family: sans-serif;
+  background-color: white;
+  font-size: 12px;
+  font-weight: 700;
+  font-style: bold;
+}
+
+[data-title] {
+  position: relative;
+  font-size: 12px;
+  font-weight: 700;
+  font-style: bold;
 }
 
 #canvas_container {
-  /* text-align: center; */
-  /* align-items: center; */
   display: flex;
   position: relative;
-  right: -70px;
-  /* justify-content: center;
-  display: flex;
-  justify-content: flex-end; 
-  align-items: center; 
-  height: 50%;
-  background-color: lightgray; 
-  border: 1px solid gray;  */
+  right: -120px;
 }
 
 #instructions {
@@ -106,11 +131,20 @@ a:link {
   text-align: center;
   margin-top: 40px;
   margin-left: 10px;
-  width:150px;
+  width: 300px;
 }
 
-#instructions-paragraph {
+.instructions_header{
+  text-align: center;
+}
+
+.instructions_paragraph {
   text-align: left;
+}
+
+.instructions_paragraph span {
+  font-size: 40px;
+  font-weight: 600;
 }
 
 

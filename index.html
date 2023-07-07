@@ -14,7 +14,7 @@
 <body>  
   
   <div id="container">
-    <div>
+    <div class="container_header">
       <h1 id="game-name">BUNNY HOP</h1>
     </div>
 
@@ -23,27 +23,28 @@
 
         <li id="restart-button">
           <a href="#">
-            <i class="fa-solid fa-rotate-right fa-2x"></i>
+            <i data-title="Restart" class="fa-solid fa-rotate-right fa-2x"></i>
           </a>
         </li>
 
         <li id="pause-button">
           <a href="#">
-            <i class="fa-solid fa-pause fa-2x"></i>
+            <i data-title="Pause/Play" class="fa-solid fa-pause fa-2x"></i>
           </a>
         </li>
 
         <li>
           <a href="https://github.com/olga-bessonova/BunnyHop">
-            <i class="fa-brands fa-github fa-2x"></i>
+            <i data-title="GitHub" class="fa-brands fa-github fa-2x"></i>
           </a>
         </li>
 
         <li>
           <a href="https://www.linkedin.com/in/olga-borovikova/">
-            <i class="fa-brands fa-linkedin-in fa-2x"></i>
+            <i data-title="LinkedIn" class="fa-brands fa-linkedin-in fa-2x"></i>
           </a>
         </li>
+
       </ul>
     </div>
 
@@ -51,14 +52,14 @@
       <canvas id="canvas"></canvas>
       <section id="instructions">
         <!-- <i class="fa-solid fa-carrot fa-3x"></i> -->
-        <h2>How to Play:</h2>
-          <p id="instructions-paragraph" >
+        <h2 class="instructions_header">How to Play:</h2>
               <!-- Click Restart to reset the game. -->
               <!-- <br><br> -->
               
-              <br>
-              Use left and right arrows to move, and space to jump.
-          </p>
+              <p class="instructions_paragraph"><i class="fa-solid fa-arrow-left"></i> left arrow key to run left</p>
+              <p class="instructions_paragraph"><i class="fa-solid fa-arrow-right"></i> left arrow key to run right</p>
+              
+              <p class="instructions_paragraph"><span>&#x2423</span> space to jump</p>
       </section>
     </div>
 

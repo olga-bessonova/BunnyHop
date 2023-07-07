@@ -320,7 +320,7 @@ window.addEventListener('load', function(){
     pauseButton.addEventListener("click", buttonEvent)
     
     function buttonEvent(e) {
-      console.log(pause)
+      // console.log(pause)
       if (pause === true) {
         pause = false;
         animate();
@@ -335,9 +335,7 @@ window.addEventListener('load', function(){
   let restartButton = document.getElementById("restart-button");
   restartButton.addEventListener('click', () => {
     if (gameOver) {
-      // window.requestAnimationFrame(animate)
-      start();
-      animate();
+      location.reload();
     } else{
       start();
     }
@@ -532,7 +530,7 @@ window.addEventListener('load', function(){
             gameWin = true;
           }
           if (bunny.pos.y > canvas.height) {
-            console.log('Lose!');
+            // console.log('Lose!');
             start();
           }
           displayInfo(ctx);

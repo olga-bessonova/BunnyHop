@@ -24,88 +24,66 @@
   <title>Bunny Hop</title>
 </head>
 
-<body>  
-  
+<body>
   <div id="container">
-    <div class="container_header">
-      <h1 id="game-name">BUNNY HOP</h1>
-    </div>
+    <h1 id="game-name">BUNNY HOP</h1>
 
-    <div id="navigation_bar">
-      <ul class="navigation_bar_ul">
-
-        <li id="restart-button">
-          <a href="#">
+    <div id="game-layout">
+      <div id="play-area">
+        <nav id="toolbar">
+          <button id="restart-button" type="button" aria-label="Restart">
             <i data-title="Restart" class="fa-solid fa-rotate-right fa-2x"></i>
-          </a>
-        </li>
-
-        <li id="pause-button">
-          <a href="#">
+          </button>
+          <button id="pause-button" type="button" aria-label="Pause or play">
             <i data-title="Pause/Play" class="fa-solid fa-pause fa-2x"></i>
+          </button>
+        </nav>
+
+        <div id="screen">
+          <canvas id="canvas"></canvas>
+          <button id="play-again" type="button" hidden>Play again</button>
+        </div>
+
+        <footer id="credits">
+          <span>Made by Olga Bessonova</span>
+          <a href="https://github.com/olga-bessonova" target="_blank" rel="noopener">
+            <i class="fa-brands fa-github"></i> GitHub
           </a>
-        </li>
-
-        <li>
-          <a href="https://github.com/olga-bessonova/BunnyHop">
-            <i data-title="GitHub" class="fa-brands fa-github fa-2x"></i>
+          <a href="https://www.linkedin.com/in/olga-borovikova/" target="_blank" rel="noopener">
+            <i class="fa-brands fa-linkedin-in"></i> LinkedIn
           </a>
-        </li>
-
-        <li>
-          <a href="https://www.linkedin.com/in/olga-borovikova/">
-            <i data-title="LinkedIn" class="fa-brands fa-linkedin-in fa-2x"></i>
+          <a href="https://olgabessonova.com" target="_blank" rel="noopener">
+            <i class="fa-solid fa-globe"></i> olgabessonova.com
           </a>
-        </li>
+        </footer>
+      </div>
 
-      </ul>
-    </div>
-
-    <div id="canvas_container">
-      <canvas id="canvas"></canvas>
       <section id="instructions">
-        <!-- <i class="fa-solid fa-carrot fa-3x"></i> -->
         <h2 class="instructions_header">How to Play:</h2>
-              <!-- Click Restart to reset the game. -->
-              <!-- <br><br> -->
-              
-              <p class="instructions_paragraph"><i class="fa-solid fa-arrow-left"></i> left arrow key to run left</p>
-              <p class="instructions_paragraph"><i class="fa-solid fa-arrow-right"></i> left arrow key to run right</p>
-              
-              <p class="instructions_paragraph"><span>&#x2423</span> space to jump</p>
+        <p class="instructions_paragraph"><span class="key"><i class="fa-solid fa-arrow-left"></i></span> <span class="key"><i class="fa-solid fa-arrow-right"></i></span> run left and right</p>
+        <p class="instructions_paragraph"><span class="key">Space</span> or <span class="key"><i class="fa-solid fa-arrow-up"></i></span> jump</p>
+        <p class="instructions_paragraph">Jump on ghosts to defeat them: +100</p>
+        <p class="instructions_paragraph"><i class="fa-solid fa-carrot"></i> Collect carrots: +10 each</p>
+        <p class="instructions_paragraph"><i class="fa-solid fa-heart"></i> You have 3 lives. A ghost bite or a fall into a gap costs one.</p>
+        <p class="instructions_paragraph">Run to the end of the level to win!</p>
       </section>
     </div>
+  </div>
 
-    
-    </div>
-
-    <!-- <br> -->
-
-    
-    
-    
-
-
-
-    <img id="bunny" src="./assets/bunnypack_assets/bunnypack_spritesheets/bunny_run_strip6_bigger.png">
-    <img id="bunnySpriteStandRight" src="./assets/bunnypack_assets/bunnypack_spritesheets/bunny_sit_right_strip12_bigger.png">
-    <img id="bunnySpriteStandLeft" src="./assets/bunnypack_assets/bunnypack_spritesheets/bunny_sit_left_strip12_bigger.png">
-    <img id="bunnySpriteRunRight" src="./assets/bunnypack_assets/bunnypack_spritesheets/bunny_run_right_strip6_bigger.png">
-    <img id="bunnySpriteRunLeft" src="./assets/bunnypack_assets/bunnypack_spritesheets/bunny_run_left_strip6_bigger.png">
-    <img id="bunnySpriteDieRight" src="./assets/bunnypack_assets/bunnypack_spritesheets/bunny_die_right_strip16_bigger.png">
-    <img id="bunnySpriteDieLeft" src="./assets/bunnypack_assets/bunnypack_spritesheets/bunny_die_left_strip16_bigger.png">
-
-    <img id="ghost" src="./assets/PlatformerPack/ghost1_fly_1_192x32.png">
-
-    <script src="index.js"></script>
-
-    <div id="you-win" style="display:none">
-      <h1>You Win!</h1>
-      <!-- <a href="#" onclick="startGame()">Start Game</a> -->
-    </div>
-</section>
-
-
-  
+  <script src="js/config.js"></script>
+  <script src="js/sprites.js"></script>
+  <script src="js/input.js"></script>
+  <script src="js/high-score.js"></script>
+  <script src="js/entities/body.js"></script>
+  <script src="js/entities/platform.js"></script>
+  <script src="js/entities/bunny.js"></script>
+  <script src="js/entities/enemy.js"></script>
+  <script src="js/entities/carrot.js"></script>
+  <script src="js/entities/floating-text.js"></script>
+  <script src="js/hud.js"></script>
+  <script src="js/win-scene.js"></script>
+  <script src="js/level.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

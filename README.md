@@ -4,9 +4,9 @@
 
 # Background
 
-A side-scrolling game where the main character bunny needs to get from start to finish. Along the way the bunny defeats enemies by jumping on top of them. The bunny has one life. The bunny loses life if an enemy bites or the bunny fall through the gap on a map. If the bunny falls through the pitfall, the game restarts. If an enemy kills the bunny, a "GAME OVER" message appears and the game stops.
+A side-scrolling game where the main character bunny needs to get from start to finish. Along the way the bunny defeats ghosts by jumping on top of them and collects carrots. The bunny has 3 lives. It loses a life if a ghost bites it or it falls into a gap on the map. After a fall it comes back on the last platform it stood on. When all lives are gone, a "GAME OVER" message appears and the game stops.
 
-There is a scoring system. The game ends successfully if the map ends and the bunny reaches the finish. 
+There is a scoring system, and the best score is kept in the browser between visits. The game ends successfully if the bunny reaches the finish.
 
 <img src="https://i.postimg.cc/65Mr8BDy/begin-dead.gif">
 <img src="https://i.postimg.cc/kXJNM2Y0/begin-fall2.gif">
@@ -14,12 +14,17 @@ There is a scoring system. The game ends successfully if the map ends and the bu
 
 
 # Functionality
-* Use left, right arrows to move left and right. Use space to jump. 
+* Use left, right arrows to move left and right. Use space or the up arrow to jump.
 * Implementation of gravity.
 * Implementation of collision
 * Map update (side-scrolling feature)
-* Attack enemies
-* Gain points by moving closer to finish and defeating enemies 
+* Attack enemies. Enemies start moving when they appear on screen.
+* 3 lives, shown as hearts
+* Gain points by moving closer to finish (1 point per 10px), defeating enemies (+100) and collecting carrots (+10)
+* Best score saved in the browser (localStorage)
+* Carrots are scattered randomly each round (always 16)
+* "Play again" button after winning, or 2 seconds after a game over (Enter works too)
+* Sprite animations for idle, run, jump, fall, land, hurt and death
 
 Bonus features (to be implemented):
 * Sound effects
@@ -40,49 +45,52 @@ Bonus feature (to be implemented):
 * Google Fire
 
 # Code
-Here is an implementation of a class Enemy:
+The game is split into one class per file under `js/`:
+
+| File | What it does |
+|---|---|
+| `config.js` | All game settings (speeds, gravity, lives, points) |
+| `sprites.js` | Loads sprite sheets; `Animation` and `Animator` play strips of frames |
+| `input.js` | Keyboard state |
+| `high-score.js` | Best score in localStorage |
+| `entities/body.js` | Shared gravity and platform collision |
+| `entities/bunny.js` | The player |
+| `entities/enemy.js` | `Enemy` base class and the `Ghost` |
+| `entities/platform.js` | Ground and floating platforms |
+| `entities/carrot.js` | Collectible carrots |
+| `hud.js` | Score, best score and hearts |
+| `win-scene.js` | The happy bunny with a carrot under "YOU WIN!" |
+| `level.js` | Map layout: platforms, ghosts, carrots |
+| `game.js` | Game loop, camera, scoring, lives |
+
+Here is the `Enemy` class. It waits until it scrolls onto the screen, then starts moving:
 ```javascript
-  class Enemy {
-    constructor({x, y}){           
-      
-      this.speed = {
-        x: 0.5,
-        y: 0
-      }
+class Enemy extends Body {
+  constructor(options) {
+    super(options);
+    this.active = false;
+    this.defeated = false;
+    this.fadeTicks = 0;
+  }
 
-      this.pos = {
-        x: x,
-        y: y
-      }
-      this.image = document.getElementById('ghost')
-      this.width = this.image.width / 6
-      this.height = this.image.height
-      this.frameX = 0
-      this.frameY = 0 
-    }
+  activate() {
+    this.active = true;
+  }
 
-    draw(){
-      ctx.drawImage(this.image, 
-        this.frameX * this.width, this.frameY * this.height,
-        this.width, this.height,
-        this.pos.x, this.pos.y, this.width, this.height);
-    }
+  defeat() {
+    this.defeated = true;
+    this.fadeTicks = 20;
+  }
 
-    update(){
-      this.frameX++;
-      if (this.frameX >= 6) this.frameX = 0      
-      this.draw();
-      this.pos.x -= this.speed.x;
-      this.pos.y += this.speed.y;
-      if (this.pos.y + this.height + this.speed.y < canvas.height && !this.onGround()){
-        this.speed.y += gravity;
-      }
+  update(platforms) {
+    if (this.defeated) {
+      this.fadeTicks--;
+      return;
     }
-
-    onGround(){
-      return this.pos.y >= canvas.height - this.height;
-    }
-  };
+    if (!this.active) return;
+    this.move(platforms);
+  }
+}
 ```
 
 # Timeline

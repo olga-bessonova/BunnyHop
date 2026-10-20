@@ -35,8 +35,8 @@ const CONFIG = {
 
   score: {
     // one point for every this many pixels of progress
-    pixelsPerPoint: 10,
-    stomp: 100,
+    pixelsPerPoint: 15,
+    stomp: 50,
     carrot: 10
   },
 

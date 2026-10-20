@@ -177,3 +177,155 @@ h1 {
   font-weight: 700;
   text-align: center;
 }
+
+#rotate-hint,
+.touch-only {
+  display: none;
+}
+
+#screen {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+
+/* ---------- phones and tablets ---------- */
+
+@media (pointer: coarse) {
+  .touch-only {
+    display: block;
+  }
+
+  .keys-only {
+    display: none;
+  }
+
+  /* hover tooltips stick after a tap on touch screens */
+  [data-title]:after {
+    display: none;
+  }
+}
+
+/* portrait: ask to rotate, keep instructions and credits readable */
+@media (pointer: coarse) and (orientation: portrait) {
+  #rotate-hint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin: 10px 0 0;
+    padding: 20px 24px;
+    font-family: 'Courier New';
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    background: white;
+    border: 5px solid rgb(214, 115, 217);
+  }
+
+  #rotate-hint i {
+    animation: rotate-phone 2s ease-in-out infinite;
+  }
+
+  #game-layout {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #play-area {
+    display: contents;
+  }
+
+  #toolbar,
+  #screen {
+    display: none;
+  }
+
+  #instructions {
+    margin-top: 0;
+    width: auto;
+    max-width: 360px;
+  }
+
+  #credits {
+    order: 1;
+    margin-top: 0;
+    font-size: 16px;
+  }
+}
+
+@keyframes rotate-phone {
+  0%, 20% { transform: rotate(0deg); }
+  50%, 70% { transform: rotate(-90deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* landscape: the game fills the screen */
+@media (pointer: coarse) and (orientation: landscape) {
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  /* no scrolling or pinch zoom while playing */
+  body {
+    touch-action: none;
+  }
+
+  h1,
+  #instructions,
+  #credits {
+    display: none;
+  }
+
+  #container {
+    height: 100vh;
+    height: 100dvh;
+    justify-content: center;
+    padding: 0;
+  }
+
+  #game-layout {
+    display: block;
+  }
+
+  #play-area {
+    position: relative;
+  }
+
+  #canvas {
+    border: none;
+    /* as big as fits, keeping the 800x500 shape and clear of the notch */
+    width: min(100vw, 160vh);
+    width: min(100vw - env(safe-area-inset-left) - env(safe-area-inset-right), 160dvh);
+    height: auto;
+  }
+
+  #toolbar {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    gap: 10px;
+    margin: 0;
+  }
+
+  #toolbar button {
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+  }
+
+  #toolbar .fa-2x {
+    font-size: 1.3em;
+  }
+
+  #play-again {
+    bottom: 24px;
+    font-size: 22px;
+  }
+}

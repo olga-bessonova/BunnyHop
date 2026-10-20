@@ -51,7 +51,7 @@ const LEVEL = {
   ],
 
   // carrots are scattered randomly each round, always this many
-  carrotCount: 16
+  carrotCount: 20
 };
 
 

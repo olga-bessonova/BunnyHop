@@ -1,0 +1,17 @@
+{
+  "name": "Bunny Hop",
+  "short_name": "Bunny Hop",
+  "description": "Side-scrolling 2D game: help the bunny hop over gaps, stomp ghosts and collect carrots.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#ffd255",
+  "theme_color": "#ffd255",
+  "categories": ["games"],
+  "icons": [
+    {"src": "assets/icon/app/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "assets/icon/app/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "assets/icon/app/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}

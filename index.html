@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="author" content="Olga Bessonova">
   <meta property="og:title" content="Bunny Hop" />
   <meta property="og:image" content="https://i.postimg.cc/158mG2fv/logo.jpg" />
@@ -20,6 +20,15 @@
   <link rel="stylesheet" href="index.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="icon" href="./assets/icon/bunny.png">
+
+  <!-- installable app (PWA) -->
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="theme-color" content="#ffd255">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Bunny Hop">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="./assets/icon/app/apple-touch-icon.png">
   
   <title>Bunny Hop</title>
 </head>
@@ -27,6 +36,12 @@
 <body>
   <div id="container">
     <h1 id="game-name">BUNNY HOP</h1>
+
+    <!-- phones in portrait: the game needs landscape -->
+    <div id="rotate-hint">
+      <i class="fa-solid fa-mobile-screen-button fa-3x"></i>
+      <p>Turn your phone sideways to play</p>
+    </div>
 
     <div id="game-layout">
       <div id="play-area">
@@ -36,6 +51,9 @@
           </button>
           <button id="pause-button" type="button" aria-label="Pause or play">
             <i data-title="Pause/Play" class="fa-solid fa-pause fa-2x"></i>
+          </button>
+          <button id="fullscreen-button" type="button" aria-label="Full screen" hidden>
+            <i class="fa-solid fa-expand fa-2x"></i>
           </button>
         </nav>
 
@@ -60,9 +78,11 @@
 
       <section id="instructions">
         <h2 class="instructions_header">How to Play:</h2>
-        <p class="instructions_paragraph"><span class="key"><i class="fa-solid fa-arrow-left"></i></span> <span class="key"><i class="fa-solid fa-arrow-right"></i></span> run left and right</p>
-        <p class="instructions_paragraph"><span class="key">Space</span> or <span class="key"><i class="fa-solid fa-arrow-up"></i></span> jump</p>
-        <p class="instructions_paragraph">Jump on ghosts to defeat them: +100</p>
+        <p class="instructions_paragraph keys-only"><span class="key"><i class="fa-solid fa-arrow-left"></i></span> <span class="key"><i class="fa-solid fa-arrow-right"></i></span> run left and right</p>
+        <p class="instructions_paragraph keys-only"><span class="key">Space</span> or <span class="key"><i class="fa-solid fa-arrow-up"></i></span> jump</p>
+        <p class="instructions_paragraph touch-only"><i class="fa-solid fa-hand-pointer"></i> Hold the left or right side of the screen to run</p>
+        <p class="instructions_paragraph touch-only"><i class="fa-solid fa-hand-pointer"></i> Tap to jump. While running, tap with another finger.</p>
+        <p class="instructions_paragraph">Jump on ghosts to defeat them: +50</p>
         <p class="instructions_paragraph"><i class="fa-solid fa-carrot"></i> Collect carrots: +10 each</p>
         <p class="instructions_paragraph"><i class="fa-solid fa-heart"></i> You have 3 lives. A ghost bite or a fall into a gap costs one.</p>
         <p class="instructions_paragraph">Run to the end of the level to win!</p>

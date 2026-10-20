@@ -20,11 +20,15 @@ There is a scoring system, and the best score is kept in the browser between vis
 * Map update (side-scrolling feature)
 * Attack enemies. Enemies start moving when they appear on screen.
 * 3 lives, shown as hearts
-* Gain points by moving closer to finish (1 point per 10px), defeating enemies (+100) and collecting carrots (+10)
+* Gain points by moving closer to finish (1 point per 15px), defeating enemies (+50) and collecting carrots (+10)
 * Best score saved in the browser (localStorage)
-* Carrots are scattered randomly each round (always 16)
+* Carrots are scattered randomly each round (always 20)
 * "Play again" button after winning, or 2 seconds after a game over (Enter works too)
 * Sprite animations for idle, run, jump, fall, land, hurt and death
+* Mobile: plays sideways (landscape) on phones. Hold the left or right side of the screen to run, tap to jump
+* Installable app (PWA): works offline after the first visit
+  * Android (Chrome): menu, then "Install app" / "Add to Home screen"
+  * iPhone (Safari): Share, then "Add to Home Screen"
 
 Bonus features (to be implemented):
 * Sound effects
@@ -62,6 +66,8 @@ The game is split into one class per file under `js/`:
 | `win-scene.js` | The happy bunny with a carrot under "YOU WIN!" |
 | `level.js` | Map layout: platforms, ghosts, carrots |
 | `game.js` | Game loop, camera, scoring, lives |
+| `main.js` | Starts the game, buttons, phone rotation, full screen |
+| `../sw.js`, `../manifest.webmanifest` | Offline cache and app install settings |
 
 Here is the `Enemy` class. It waits until it scrolls onto the screen, then starts moving:
 ```javascript

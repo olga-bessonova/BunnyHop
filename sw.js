@@ -2,7 +2,7 @@
 // Files are served from the cache right away and refreshed in the background,
 // so an update shows up the next time the game is opened.
 // Bump the version when files are added or removed from the list below.
-const CACHE = 'bunnyhop-v1';
+const CACHE = 'bunnyhop-v2';
 
 const FILES = [
   './',
@@ -38,6 +38,7 @@ const FILES = [
   'assets/PlatformerPack/heart2-shine.png',
   'assets/PlatformerPack/heart2-empty.png',
   'assets/carrot/carrot_shine_strip5.png',
+  'assets/platform/grass_platform.png',
   'assets/fonts/hackbot-font/HackbotFreeTrial-8MgA2.otf',
   'assets/fonts/snes-font/SnesItalic-1G9Be.ttf',
   'assets/icon/bunny.png',

@@ -23,7 +23,8 @@ class Game {
 
   restart() {
     const sprites = this.sprites;
-    this.platforms = LEVEL.platforms.map(data => new Platform(data));
+    this.platforms = mergePlatforms(LEVEL.platforms);
+    this.platforms.forEach(platform => platform.render(sprites.grassPlatform));
     this.bunny = new Bunny(sprites, {x: CONFIG.bunny.startX, y: 0});
     this.enemies = LEVEL.ghosts.map(data => this.settle(new Ghost(sprites, data)));
     this.carrots = randomCarrotSpots(this.platforms, LEVEL.carrotCount)

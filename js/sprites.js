@@ -12,7 +12,8 @@ const SPRITE_PATHS = {
   ghostHurt:      'assets/PlatformerPack/ghost1_hurt.png',
   heartShine:     'assets/PlatformerPack/heart2-shine.png',
   heartEmpty:     'assets/PlatformerPack/heart2-empty.png',
-  carrotShine:    'assets/carrot/carrot_shine_strip5.png'
+  carrotShine:    'assets/carrot/carrot_shine_strip5.png',
+  grassPlatform:  'assets/platform/grass_platform.png'
 };
 
 function loadSprites(paths) {

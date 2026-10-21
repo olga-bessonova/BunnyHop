@@ -39,8 +39,11 @@
 
     <!-- phones in portrait: the game needs landscape -->
     <div id="rotate-hint">
-      <i class="fa-solid fa-mobile-screen-button fa-3x"></i>
-      <p>Turn your phone sideways to play</p>
+      <canvas id="rotate-scene"></canvas>
+      <div class="rotate-message">
+        <i class="fa-solid fa-mobile-screen-button fa-2x"></i>
+        <p>Turn your phone sideways to play</p>
+      </div>
     </div>
 
     <div id="game-layout">
@@ -102,6 +105,7 @@
   <script src="js/entities/floating-text.js"></script>
   <script src="js/hud.js"></script>
   <script src="js/win-scene.js"></script>
+  <script src="js/rotate-scene.js"></script>
   <script src="js/level.js"></script>
   <script src="js/game.js"></script>
   <script src="js/main.js"></script>

@@ -2,7 +2,7 @@
 // Files are served from the cache right away and refreshed in the background,
 // so an update shows up the next time the game is opened.
 // Bump the version when files are added or removed from the list below.
-const CACHE = 'bunnyhop-v2';
+const CACHE = 'bunnyhop-v3';
 
 const FILES = [
   './',
@@ -21,6 +21,7 @@ const FILES = [
   'js/entities/floating-text.js',
   'js/hud.js',
   'js/win-scene.js',
+  'js/rotate-scene.js',
   'js/level.js',
   'js/game.js',
   'js/main.js',

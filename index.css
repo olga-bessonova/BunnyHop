@@ -32,14 +32,19 @@ h1 {
   font-size: 35px;
   width: 100%;
   text-align: center;
-  margin: 20px 0 10px;
+  margin: 0 0 10px;
 }
 
 #container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 16px 30px;
+  /* everything sits in the middle of the window, up and down as well as across */
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 16px;
 }
 
 #game-layout {
@@ -100,7 +105,7 @@ h1 {
   flex-wrap: wrap;
   justify-content: center;
   gap: 8px 24px;
-  margin-top: 12px;
+  margin-top: 48px;
   font-family: 'Courier New';
   font-size: 18px;
   font-weight: 700;
@@ -213,9 +218,9 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    width: 100%;
+    max-width: 360px;
     margin: 10px 0 0;
-    padding: 20px 24px;
     font-family: 'Courier New';
     font-size: 20px;
     font-weight: 700;
@@ -224,7 +229,27 @@ h1 {
     border: 5px solid rgb(214, 115, 217);
   }
 
-  #rotate-hint i {
+  #rotate-scene {
+    display: block;
+    width: 100%;
+    height: auto;
+    image-rendering: pixelated;
+  }
+
+  .rotate-message {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 16px 14px;
+    text-align: left;
+  }
+
+  .rotate-message p {
+    margin: 0;
+  }
+
+  .rotate-message i {
+    flex-shrink: 0;
     animation: rotate-phone 2s ease-in-out infinite;
   }
 
@@ -250,7 +275,7 @@ h1 {
 
   #credits {
     order: 1;
-    margin-top: 0;
+    margin-top: 32px;
     font-size: 16px;
   }
 }
@@ -270,9 +295,10 @@ h1 {
     overscroll-behavior: none;
   }
 
-  /* no scrolling or pinch zoom while playing */
+  /* no scrolling or pinch zoom while playing; the yellow is dimmed so the game stands out */
   body {
     touch-action: none;
+    background: rgb(128, 105, 43);
   }
 
   h1,

@@ -15,6 +15,7 @@ window.addEventListener('load', () => {
 
   loadSprites(SPRITE_PATHS).then(sprites => {
     const game = new Game(canvas, sprites);
+    new RotateScene(document.getElementById('rotate-scene'), sprites, () => phonePortrait.matches).start();
 
     // on a phone in landscape the whole screen is the controller; elsewhere only the game itself
     game.input.attachTouch(e => phoneLandscape.matches || e.target.closest('#screen'));

@@ -4,6 +4,7 @@ const TOUCH_HOLD_MS = 140;
 // Tracks the keys and touches the game uses.
 // Keyboard: arrows run, Space or Up jumps.
 // Touch: hold the left or right half of the screen to run, tap to jump.
+// On-screen pad (phones in landscape): arrow buttons run, round buttons jump.
 class Input {
   constructor() {
     this.left = false;
@@ -12,6 +13,8 @@ class Input {
     this.jumpQueued = false;
     // active touches by pointer id: {side, holding, timer}
     this.touches = new Map();
+    // on-screen arrow buttons held down
+    this.pad = {left: false, right: false};
 
     window.addEventListener('keydown', (e) => this.onKey(e, true));
     window.addEventListener('keyup', (e) => this.onKey(e, false));
@@ -43,8 +46,8 @@ class Input {
 
     window.addEventListener('pointerdown', (e) => {
       if (e.pointerType === 'mouse' || !enabled(e)) return;
-      // buttons and links keep working normally
-      if (e.target.closest('button, a')) return;
+      // buttons, links and the on-screen pads keep working normally
+      if (e.target.closest('button, a, .pad')) return;
       e.preventDefault();
 
       const touch = {side: sideOf(e), holding: false};
@@ -69,6 +72,30 @@ class Input {
     window.addEventListener('pointercancel', (e) => release(e, false));
   }
 
+  // on-screen buttons marked data-pad="left", "right" or "jump"
+  attachPad(buttons) {
+    buttons.forEach(button => {
+      const action = button.dataset.pad;
+      button.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        // keep getting this finger's events even if it slides off the button
+        button.setPointerCapture(e.pointerId);
+        button.classList.add('pressed');
+        if (action === 'jump') this.jumpQueued = true;
+        else this.pad[action] = true;
+      });
+      const release = () => {
+        button.classList.remove('pressed');
+        if (action !== 'jump') this.pad[action] = false;
+      };
+      button.addEventListener('pointerup', release);
+      button.addEventListener('pointercancel', release);
+      button.addEventListener('lostpointercapture', release);
+      // no long-press menu on the buttons
+      button.addEventListener('contextmenu', (e) => e.preventDefault());
+    });
+  }
+
   consumeJump() {
     const queued = this.jumpQueued;
     this.jumpQueued = false;
@@ -77,8 +104,8 @@ class Input {
 
   // horizontal direction: -1 left, 1 right, 0 none
   get direction() {
-    let left = this.left;
-    let right = this.right;
+    let left = this.left || this.pad.left;
+    let right = this.right || this.pad.right;
     this.touches.forEach(touch => {
       if (!touch.holding) return;
       if (touch.side < 0) left = true;

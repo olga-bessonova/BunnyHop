@@ -184,7 +184,8 @@ h1 {
 }
 
 #rotate-hint,
-.touch-only {
+.touch-only,
+.pad {
   display: none;
 }
 
@@ -198,6 +199,11 @@ h1 {
 /* ---------- phones and tablets ---------- */
 
 @media (pointer: coarse) {
+  /* the yellow is dimmed on phones so the white game screen stands out */
+  body {
+    background: rgb(128, 105, 43);
+  }
+
   .touch-only {
     display: block;
   }
@@ -295,10 +301,16 @@ h1 {
     overscroll-behavior: none;
   }
 
-  /* no scrolling or pinch zoom while playing; the yellow is dimmed so the game stands out */
+  /* no scrolling or pinch zoom while playing */
   body {
     touch-action: none;
-    background: rgb(128, 105, 43);
+  }
+
+  :root {
+    /* room kept on each side of the game for the buttons */
+    --pad-space: 104px;
+    /* as big as fits, keeping the 800x500 shape and clear of the notch */
+    --game-width: min(100vw - env(safe-area-inset-left) - env(safe-area-inset-right) - 2 * var(--pad-space), 160dvh);
   }
 
   h1,
@@ -324,9 +336,8 @@ h1 {
 
   #canvas {
     border: none;
-    /* as big as fits, keeping the 800x500 shape and clear of the notch */
-    width: min(100vw, 160vh);
-    width: min(100vw - env(safe-area-inset-left) - env(safe-area-inset-right), 160dvh);
+    width: min(100vw - 208px, 160vh);
+    width: var(--game-width);
     height: auto;
   }
 
@@ -354,4 +365,105 @@ h1 {
     bottom: 24px;
     font-size: 22px;
   }
+
+  /* ----- handheld-style buttons on the yellow sides ----- */
+
+  .pad {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    box-sizing: border-box;
+    width: calc((100vw - var(--game-width)) / 2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+
+  #pad-left {
+    left: 0;
+    padding-left: env(safe-area-inset-left);
+  }
+
+  #pad-right {
+    right: 0;
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .pad button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: #d9d9d9;
+    background: #333;
+    border: none;
+    box-shadow: 0 3px 0 #161616;
+    cursor: pointer;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .pad button.pressed {
+    background: #4a4a4a;
+    box-shadow: 0 1px 0 #161616;
+    transform: translateY(2px);
+  }
+
+  /* D-pad: a plus shape of four arrow buttons */
+  .dpad {
+    display: grid;
+    grid-template-columns: repeat(3, 30px);
+    grid-template-rows: repeat(3, 30px);
+  }
+
+  .dpad button {
+    font-size: 22px;
+  }
+
+  .dpad-up    { grid-area: 1 / 2; border-radius: 6px 6px 0 0; }
+  .dpad-left  { grid-area: 2 / 1; border-radius: 6px 0 0 6px; }
+  .dpad-right { grid-area: 2 / 3; border-radius: 0 6px 6px 0; }
+  .dpad-down  { grid-area: 3 / 2; border-radius: 0 0 6px 6px; pointer-events: none; }
+
+  .dpad-center {
+    grid-area: 2 / 2;
+    background: #333;
+    box-shadow: 0 3px 0 #161616;
+  }
+
+  /* face buttons: four round buttons in a diamond, PlayStation colors */
+  .face-buttons {
+    position: relative;
+    width: 96px;
+    height: 96px;
+  }
+
+  .face-buttons button {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+  }
+
+  .face-buttons svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke-width: 2.2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+
+  .face-triangle { top: 0;    left: 31px; }
+  .face-circle   { top: 31px; right: 0; }
+  .face-cross    { bottom: 0; left: 31px; }
+  .face-square   { top: 31px; left: 0; }
+
+  .face-triangle svg { stroke: #3fc7a5; }
+  .face-circle svg   { stroke: #f2626b; }
+  .face-cross svg    { stroke: #7aa7f0; }
+  .face-square svg   { stroke: #e98fd0; }
 }

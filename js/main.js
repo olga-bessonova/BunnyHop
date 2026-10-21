@@ -19,6 +19,7 @@ window.addEventListener('load', () => {
 
     // on a phone in landscape the whole screen is the controller; elsewhere only the game itself
     game.input.attachTouch(e => phoneLandscape.matches || e.target.closest('#screen'));
+    game.input.attachPad(document.querySelectorAll('[data-pad]'));
 
     const showPaused = (paused) => {
       pauseIcon.classList.toggle('fa-pause', !paused);

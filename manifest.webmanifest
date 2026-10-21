@@ -6,8 +6,8 @@
   "scope": "./",
   "display": "fullscreen",
   "orientation": "landscape",
-  "background_color": "#ffd255",
-  "theme_color": "#ffd255",
+  "background_color": "#80692b",
+  "theme_color": "#80692b",
   "categories": ["games"],
   "icons": [
     {"src": "assets/icon/app/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},

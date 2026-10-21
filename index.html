@@ -24,6 +24,7 @@
   <!-- installable app (PWA) -->
   <link rel="manifest" href="./manifest.webmanifest">
   <meta name="theme-color" content="#ffd255">
+  <meta name="theme-color" media="(pointer: coarse)" content="#80692b">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Bunny Hop">
@@ -83,13 +84,40 @@
         <h2 class="instructions_header">How to Play:</h2>
         <p class="instructions_paragraph keys-only"><span class="key"><i class="fa-solid fa-arrow-left"></i></span> <span class="key"><i class="fa-solid fa-arrow-right"></i></span> run left and right</p>
         <p class="instructions_paragraph keys-only"><span class="key">Space</span> or <span class="key"><i class="fa-solid fa-arrow-up"></i></span> jump</p>
-        <p class="instructions_paragraph touch-only"><i class="fa-solid fa-hand-pointer"></i> Hold the left or right side of the screen to run</p>
-        <p class="instructions_paragraph touch-only"><i class="fa-solid fa-hand-pointer"></i> Tap to jump. While running, tap with another finger.</p>
+        <p class="instructions_paragraph touch-only"><i class="fa-solid fa-gamepad"></i> Use the buttons on the sides: arrows to run, any round button to jump</p>
+        <p class="instructions_paragraph touch-only"><i class="fa-solid fa-hand-pointer"></i> Or hold the left or right side of the game to run, and tap to jump</p>
         <p class="instructions_paragraph">Jump on ghosts to defeat them: +50</p>
         <p class="instructions_paragraph"><i class="fa-solid fa-carrot"></i> Collect carrots: +10 each</p>
         <p class="instructions_paragraph"><i class="fa-solid fa-heart"></i> You have 3 lives. A ghost bite or a fall into a gap costs one.</p>
         <p class="instructions_paragraph">Run to the end of the level to win!</p>
       </section>
+    </div>
+  </div>
+
+  <!-- phones in landscape: game buttons on the sides of the screen, like a handheld console -->
+  <div id="pad-left" class="pad">
+    <div class="dpad">
+      <button type="button" class="dpad-up" data-pad="jump" aria-label="Jump"><i class="fa-solid fa-caret-up"></i></button>
+      <button type="button" class="dpad-left" data-pad="left" aria-label="Run left"><i class="fa-solid fa-caret-left"></i></button>
+      <span class="dpad-center"></span>
+      <button type="button" class="dpad-right" data-pad="right" aria-label="Run right"><i class="fa-solid fa-caret-right"></i></button>
+      <button type="button" class="dpad-down" tabindex="-1" aria-hidden="true"><i class="fa-solid fa-caret-down"></i></button>
+    </div>
+  </div>
+  <div id="pad-right" class="pad">
+    <div class="face-buttons">
+      <button type="button" class="face-triangle" data-pad="jump" aria-label="Jump">
+        <svg viewBox="0 0 20 20"><path d="M10 3 L17.5 16 H2.5 Z"/></svg>
+      </button>
+      <button type="button" class="face-circle" data-pad="jump" aria-label="Jump">
+        <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="6.5"/></svg>
+      </button>
+      <button type="button" class="face-cross" data-pad="jump" aria-label="Jump">
+        <svg viewBox="0 0 20 20"><path d="M4 4 L16 16 M16 4 L4 16"/></svg>
+      </button>
+      <button type="button" class="face-square" data-pad="jump" aria-label="Jump">
+        <svg viewBox="0 0 20 20"><rect x="4" y="4" width="12" height="12"/></svg>
+      </button>
     </div>
   </div>
 
